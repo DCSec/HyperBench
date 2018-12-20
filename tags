@@ -1,0 +1,262 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+-input-target	Makefile	/^	objcopy --input-target=elf64-x86-64 --output-target=elf32-i386 hyperbench.64 hyperbench.32$/;"	m
+AR	Makefile	/^AR = ar$/;"	m
+AS	Makefile	/^AS = gas$/;"	m
+ASFLAGS	Makefile	/^ASFLAGS = -m64 -I $(BASEDIR)\/include$/;"	m
+ATTRIBUTE	cmain.c	49;"	d	file:
+BASEDIR	Makefile	/^export BASEDIR          := $(shell pwd)$/;"	m
+BUFSZ	printf.c	10;"	d	file:
+CC	Makefile	/^CC = gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -fno-builtin -fno-pic -static -fno-strict-aliasing -O2 -Wall -MD -ggdb -m64 -Werror -fno-omit-frame-pointer -I $(BASEDIR)\/include -nostdlib$/;"	m
+CHECK_FLAG	cmain.c	44;"	d	file:
+COLUMNS	cmain.c	47;"	d	file:
+COLUMNS	console.c	4;"	d	file:
+CR0_PE	include/mmu.h	8;"	d
+CR0_PG	include/mmu.h	10;"	d
+CR0_WP	include/mmu.h	9;"	d
+CR4_PSE	include/mmu.h	12;"	d
+DEBUG	printf.c	/^FILE *DEBUG = &debug_file;$/;"	v
+DEVSPACE	include/memlayout.h	5;"	d
+DPL_USER	include/mmu.h	53;"	d
+ERROR	printf.c	/^FILE *ERROR = &error_file;$/;"	v
+EXTMEM	include/memlayout.h	3;"	d
+FL_IF	include/mmu.h	5;"	d
+FSSIZE	include/param.h	13;"	d
+KERNBASE	include/memlayout.h	8;"	d
+KERNLINK	include/memlayout.h	9;"	d
+KSTACKSIZE	include/param.h	2;"	d
+LD	Makefile	/^LD = ld$/;"	m
+LINES	cmain.c	48;"	d	file:
+LOGSIZE	include/param.h	11;"	d
+MAXARG	include/param.h	9;"	d
+MAXOPBLOCKS	include/param.h	10;"	d
+MULTIBOOT_HEADER_FLAGS	cstart.S	/^#define MULTIBOOT_HEADER_FLAGS 0x00000003$/;"	d
+MULTIBOOT_HEADER_MAGIC	cstart.S	/^#define MULTIBOOT_HEADER_MAGIC 0x1BADB002$/;"	d
+NBUF	include/param.h	12;"	d
+NCPU	include/param.h	3;"	d
+NDEV	include/param.h	7;"	d
+NFILE	include/param.h	5;"	d
+NINODE	include/param.h	6;"	d
+NOFILE	include/param.h	4;"	d
+NPDENTRIES	include/mmu.h	83;"	d
+NPROC	include/param.h	1;"	d
+NPTENTRIES	include/mmu.h	84;"	d
+NSEGS	include/mmu.h	22;"	d
+OBJS	Makefile	/^OBJS = \\$/;"	m
+OUTPUT	printf.c	/^FILE *OUTPUT = &output_file;$/;"	v
+P2V	include/memlayout.h	12;"	d
+P2V_WO	include/memlayout.h	15;"	d
+PDX	include/mmu.h	74;"	d
+PDXSHIFT	include/mmu.h	88;"	d
+PGADDR	include/mmu.h	80;"	d
+PGROUNDDOWN	include/mmu.h	91;"	d
+PGROUNDUP	include/mmu.h	90;"	d
+PGSIZE	include/mmu.h	85;"	d
+PHYSTOP	include/memlayout.h	4;"	d
+PTE_ADDR	include/mmu.h	100;"	d
+PTE_FLAGS	include/mmu.h	101;"	d
+PTE_P	include/mmu.h	94;"	d
+PTE_PS	include/mmu.h	97;"	d
+PTE_U	include/mmu.h	96;"	d
+PTE_W	include/mmu.h	95;"	d
+PTX	include/mmu.h	77;"	d
+PTXSHIFT	include/mmu.h	87;"	d
+ROOTDEV	include/param.h	8;"	d
+ROWS	console.c	3;"	d	file:
+SEG	include/mmu.h	43;"	d
+SEG16	include/mmu.h	47;"	d
+SEG_ASM	include/asm.h	11;"	d
+SEG_KCODE	include/mmu.h	15;"	d
+SEG_KDATA	include/mmu.h	16;"	d
+SEG_NULLASM	include/asm.h	5;"	d
+SEG_TSS	include/mmu.h	19;"	d
+SEG_UCODE	include/mmu.h	17;"	d
+SEG_UDATA	include/mmu.h	18;"	d
+SETGATE	include/mmu.h	168;"	d
+STA_R	include/asm.h	18;"	d
+STA_R	include/mmu.h	58;"	d
+STA_W	include/asm.h	17;"	d
+STA_W	include/mmu.h	57;"	d
+STA_X	include/asm.h	16;"	d
+STA_X	include/mmu.h	56;"	d
+STS_IG32	include/mmu.h	62;"	d
+STS_T32A	include/mmu.h	61;"	d
+STS_TG32	include/mmu.h	63;"	d
+V2P	include/memlayout.h	11;"	d
+V2P_WO	include/memlayout.h	14;"	d
+VIDEO	cmain.c	50;"	d	file:
+_ASM_GENERIC_SPINLOCK_H_	include/spinlock.h	2;"	d
+addchar	printf.c	/^static void addchar(pstream_t *p, char c)$/;"	f	file:
+added	printf.c	/^    int added;$/;"	m	struct:pstream	file:
+addr	cmain.c	/^    unsigned long addr;  $/;"	m	struct:aout_symbol_table	file:
+addr	cmain.c	/^    unsigned long addr;  $/;"	m	struct:elf_section_header_table	file:
+alternate	printf.c	/^    bool alternate;$/;"	m	struct:strprops	file:
+aout_sym	cmain.c	/^        aout_symbol_table_t aout_sym;  $/;"	m	union:multiboot_info::__anon1	file:
+aout_symbol_table	cmain.c	/^typedef struct aout_symbol_table  $/;"	s	file:
+aout_symbol_table_t	cmain.c	/^} aout_symbol_table_t;  $/;"	t	typeref:struct:aout_symbol_table	file:
+args	include/mmu.h	/^  uint args : 5;        \/\/ # args, 0 for interrupt\/trap gates$/;"	m	struct:gatedesc
+avl	include/mmu.h	/^  uint avl : 1;        \/\/ Unused (available for software use)$/;"	m	struct:segdesc
+base_15_0	include/mmu.h	/^  uint base_15_0 : 16; \/\/ Low bits of segment base address$/;"	m	struct:segdesc
+base_23_16	include/mmu.h	/^  uint base_23_16 : 8; \/\/ Middle bits of segment base address$/;"	m	struct:segdesc
+base_31_24	include/mmu.h	/^  uint base_31_24 : 8; \/\/ High bits of segment base address$/;"	m	struct:segdesc
+binstr	printf.c	/^void binstr(unsigned long x, char out[BINSTR_SZ])$/;"	f
+bool	include/types.h	/^typedef _Bool           bool;$/;"	t
+boot_device	cmain.c	/^    unsigned long boot_device;  $/;"	m	struct:multiboot_info	file:
+buffer	printf.c	/^    char *buffer;$/;"	m	struct:pstream	file:
+cls	cmain.c	/^static void cls (void)  $/;"	f	file:
+cmain	cmain.c	/^void cmain (unsigned long magic, unsigned long addr)  $/;"	f
+cmdline	cmain.c	/^    unsigned long cmdline;  $/;"	m	struct:multiboot_info	file:
+console_clear	console.c	/^void console_clear()$/;"	f
+console_init	console.c	/^void console_init()$/;"	f
+console_putc	console.c	/^void console_putc(char ch)$/;"	f
+cr3	include/mmu.h	/^  void *cr3;         \/\/ Page directory base$/;"	m	struct:taskstate
+cs	include/mmu.h	/^  uint cs : 16;         \/\/ code segment selector$/;"	m	struct:gatedesc
+cs	include/mmu.h	/^  ushort cs;$/;"	m	struct:taskstate
+cur_x	console.c	/^static unsigned int cur_x, cur_y;$/;"	v	file:
+cur_y	console.c	/^static unsigned int cur_x, cur_y;$/;"	v	file:
+db	include/mmu.h	/^  uint db : 1;         \/\/ 0 = 16-bit segment, 1 = 32-bit segment$/;"	m	struct:segdesc
+debug_file	printf.c	/^static FILE debug_file;$/;"	v	file:
+digits	printf.c	/^static char digits[16] = "0123456789abcdef";$/;"	v	file:
+dpl	include/mmu.h	/^  uint dpl : 2;         \/\/ descriptor(meaning new) privilege level$/;"	m	struct:gatedesc
+dpl	include/mmu.h	/^  uint dpl : 2;        \/\/ Descriptor Privilege Level$/;"	m	struct:segdesc
+ds	include/mmu.h	/^  ushort ds;$/;"	m	struct:taskstate
+eax	include/mmu.h	/^  uint eax;          \/\/ More saved state (registers)$/;"	m	struct:taskstate
+ebp	include/mmu.h	/^  uint *ebp;$/;"	m	struct:taskstate
+ebx	include/mmu.h	/^  uint ebx;$/;"	m	struct:taskstate
+ecx	include/mmu.h	/^  uint ecx;$/;"	m	struct:taskstate
+edi	include/mmu.h	/^  uint edi;$/;"	m	struct:taskstate
+edx	include/mmu.h	/^  uint edx;$/;"	m	struct:taskstate
+efer	cstart.S	/^efer = 0xC0000080$/;"	d
+eflags	include/mmu.h	/^  uint eflags;$/;"	m	struct:taskstate
+eip	include/mmu.h	/^  uint *eip;         \/\/ Saved state from last task switch$/;"	m	struct:taskstate
+elf_sec	cmain.c	/^        elf_section_header_table_t elf_sec;  $/;"	m	union:multiboot_info::__anon1	file:
+elf_section_header_table	cmain.c	/^typedef struct elf_section_header_table  $/;"	s	file:
+elf_section_header_table_t	cmain.c	/^} elf_section_header_table_t;  $/;"	t	typeref:struct:elf_section_header_table	file:
+enter_long_mode	cstart.S	/^enter_long_mode:$/;"	l
+entry	cstart.S	/^entry:$/;"	l
+entrypgdir	main.c	/^unsigned long entrypgdir[1] = {$/;"	v
+entrypml4e	main.c	/^unsigned long entrypml4e[1] = {$/;"	v
+error_file	printf.c	/^static FILE error_file;$/;"	v	file:
+es	include/mmu.h	/^  ushort es;         \/\/ Even more saved state (segment selectors)$/;"	m	struct:taskstate
+esi	include/mmu.h	/^  uint esi;$/;"	m	struct:taskstate
+esp	include/mmu.h	/^  uint *esp;$/;"	m	struct:taskstate
+esp0	include/mmu.h	/^  uint esp0;         \/\/ Stack pointers and segment selectors$/;"	m	struct:taskstate
+esp1	include/mmu.h	/^  uint *esp1;$/;"	m	struct:taskstate
+esp2	include/mmu.h	/^  uint *esp2;$/;"	m	struct:taskstate
+false	include/types.h	15;"	d
+flags	cmain.c	/^    unsigned long flags;  $/;"	m	struct:multiboot_info	file:
+fmtnum	printf.c	/^static int fmtnum(const char **fmt)$/;"	f	file:
+fprintf	printf.c	/^int fprintf(FILE *f, const char *fmt, ...)$/;"	f
+fs	include/mmu.h	/^  ushort fs;$/;"	m	struct:taskstate
+g	include/mmu.h	/^  uint g : 1;          \/\/ Granularity: limit scaled by 4K when set$/;"	m	struct:segdesc
+gatedesc	include/mmu.h	/^struct gatedesc {$/;"	s
+gdt64	cstart.S	/^gdt64:$/;"	l
+gdt64_desc	cstart.S	/^gdt64_desc:$/;"	l
+gdt64_end	cstart.S	/^gdt64_end:$/;"	l
+gs	include/mmu.h	/^  ushort gs;$/;"	m	struct:taskstate
+iomb	include/mmu.h	/^  ushort iomb;       \/\/ I\/O map base address$/;"	m	struct:taskstate
+itoa	cmain.c	/^static void itoa (char *buf, int base, int d)  $/;"	f	file:
+ldt	include/mmu.h	/^  ushort ldt;$/;"	m	struct:taskstate
+lim_15_0	include/mmu.h	/^  uint lim_15_0 : 16;  \/\/ Low bits of segment limit$/;"	m	struct:segdesc
+lim_19_16	include/mmu.h	/^  uint lim_19_16 : 4;  \/\/ High bits of segment limit$/;"	m	struct:segdesc
+link	include/mmu.h	/^  uint link;         \/\/ Old ts selector$/;"	m	struct:taskstate
+main	main.c	/^int main()$/;"	f
+mb_boot_info	cstart.S	/^mb_boot_info:   .quad 0$/;"	l
+mbprint	printf.c	/^void mbprint(char* str)$/;"	f
+mem_lower	cmain.c	/^    unsigned long mem_lower;  $/;"	m	struct:multiboot_info	file:
+mem_upper	cmain.c	/^    unsigned long mem_upper;  $/;"	m	struct:multiboot_info	file:
+mmap_addr	cmain.c	/^    unsigned long mmap_addr;  $/;"	m	struct:multiboot_info	file:
+mmap_length	cmain.c	/^    unsigned long mmap_length;  $/;"	m	struct:multiboot_info	file:
+mods_addr	cmain.c	/^    unsigned long mods_addr;  $/;"	m	struct:multiboot_info	file:
+mods_count	cmain.c	/^    unsigned long mods_count;  $/;"	m	struct:multiboot_info	file:
+multiboot_info	cmain.c	/^typedef struct multiboot_info  $/;"	s	file:
+multiboot_info_t	cmain.c	/^} multiboot_info_t;  $/;"	t	typeref:struct:multiboot_info	file:
+new_line	console.c	/^static void new_line()$/;"	f	file:
+npad	printf.c	/^    int npad;$/;"	m	struct:strprops	file:
+num	cmain.c	/^    unsigned long num;  $/;"	m	struct:elf_section_header_table	file:
+off_15_0	include/mmu.h	/^  uint off_15_0 : 16;   \/\/ low 16 bits of offset in segment$/;"	m	struct:gatedesc
+off_31_16	include/mmu.h	/^  uint off_31_16 : 16;  \/\/ high bits of offset in segment$/;"	m	struct:gatedesc
+output_file	printf.c	/^static FILE output_file;$/;"	v	file:
+p	include/mmu.h	/^  uint p : 1;           \/\/ Present$/;"	m	struct:gatedesc
+p	include/mmu.h	/^  uint p : 1;          \/\/ Present$/;"	m	struct:segdesc
+pad	printf.c	/^    char pad;$/;"	m	struct:strprops	file:
+padding1	include/mmu.h	/^  ushort padding1;$/;"	m	struct:taskstate
+padding10	include/mmu.h	/^  ushort padding10;$/;"	m	struct:taskstate
+padding2	include/mmu.h	/^  ushort padding2;$/;"	m	struct:taskstate
+padding3	include/mmu.h	/^  ushort padding3;$/;"	m	struct:taskstate
+padding4	include/mmu.h	/^  ushort padding4;$/;"	m	struct:taskstate
+padding5	include/mmu.h	/^  ushort padding5;$/;"	m	struct:taskstate
+padding6	include/mmu.h	/^  ushort padding6;$/;"	m	struct:taskstate
+padding7	include/mmu.h	/^  ushort padding7;$/;"	m	struct:taskstate
+padding8	include/mmu.h	/^  ushort padding8;$/;"	m	struct:taskstate
+padding9	include/mmu.h	/^  ushort padding9;$/;"	m	struct:taskstate
+pde_t	include/types.h	/^typedef uint pde_t;$/;"	t
+prepare_64	cstart.S	/^prepare_64:$/;"	l
+print_binstr	printf.c	/^void print_binstr(unsigned long x)$/;"	f
+print_int	printf.c	/^static void print_int(pstream_t *ps, long long n, int base, strprops_t props)$/;"	f	file:
+print_str	printf.c	/^static void print_str(pstream_t *p, const char *s, strprops_t props)$/;"	f	file:
+print_unsigned	printf.c	/^static void print_unsigned(pstream_t *ps, unsigned long long n, int base,$/;"	f	file:
+printf	cmain.c	/^void printf (const char *format, ...)  $/;"	f
+printf	printf.c	/^int printf(const char *fmt, ...)$/;"	f
+printf_register_debug	printf.c	/^void printf_register_debug(putch_fn_t putch_fn)$/;"	f
+printf_register_error	printf.c	/^void printf_register_error(putch_fn_t putch_fn)$/;"	f
+printf_register_output	printf.c	/^void printf_register_output(putch_fn_t putch_fn)$/;"	f
+pstream	printf.c	/^typedef struct pstream {$/;"	s	file:
+pstream_t	printf.c	/^} pstream_t;$/;"	t	typeref:struct:pstream	file:
+pte_t	include/mmu.h	/^typedef uint pte_t;$/;"	t
+putchar	cmain.c	/^static void putchar (int c)  $/;"	f	file:
+remain	printf.c	/^    int remain;$/;"	m	struct:pstream	file:
+reserved	cmain.c	/^    unsigned long reserved;  $/;"	m	struct:aout_symbol_table	file:
+rsv1	include/mmu.h	/^  uint rsv1 : 1;       \/\/ Reserved$/;"	m	struct:segdesc
+rsv1	include/mmu.h	/^  uint rsv1 : 3;        \/\/ reserved(should be zero I guess)$/;"	m	struct:gatedesc
+s	include/mmu.h	/^  uint s : 1;           \/\/ must be 0 (system)$/;"	m	struct:gatedesc
+s	include/mmu.h	/^  uint s : 1;          \/\/ 0 = system, 1 = application$/;"	m	struct:segdesc
+s16	include/types.h	/^typedef int16_t         s16;$/;"	t
+s32	include/types.h	/^typedef int32_t         s32;$/;"	t
+s64	include/types.h	/^typedef int64_t         s64;$/;"	t
+s8	include/types.h	/^typedef int8_t          s8; $/;"	t
+segdesc	include/mmu.h	/^struct segdesc {$/;"	s
+shndx	cmain.c	/^    unsigned long shndx;  $/;"	m	struct:elf_section_header_table	file:
+size	cmain.c	/^    unsigned long size;  $/;"	m	struct:elf_section_header_table	file:
+slot_from_xy	console.c	/^static inline uint16_t *slot_from_xy(unsigned int x, unsigned int y)$/;"	f	file:
+snprintf	printf.c	/^int snprintf(char *buf, int size, const char *fmt, ...)$/;"	f
+spin_lock	include/spinlock.h	/^static inline void spin_lock(struct spinlock *lock)$/;"	f
+spin_unlock	include/spinlock.h	/^static inline void spin_unlock(struct spinlock *lock)$/;"	f
+spinlock	include/spinlock.h	/^struct spinlock {$/;"	s
+ss	include/mmu.h	/^  ushort ss;$/;"	m	struct:taskstate
+ss0	include/mmu.h	/^  ushort ss0;        \/\/   after an increase in privilege level$/;"	m	struct:taskstate
+ss1	include/mmu.h	/^  ushort ss1;$/;"	m	struct:taskstate
+ss2	include/mmu.h	/^  ushort ss2;$/;"	m	struct:taskstate
+stacktop	cstart.S	/^stacktop:$/;"	l
+start64	cstart.S	/^start64:$/;"	l
+strprops	printf.c	/^typedef struct strprops {$/;"	s	file:
+strprops_t	printf.c	/^} strprops_t;$/;"	t	typeref:struct:strprops	file:
+strsize	cmain.c	/^    unsigned long strsize;  $/;"	m	struct:aout_symbol_table	file:
+t	include/mmu.h	/^  ushort t;          \/\/ Trap on task switch$/;"	m	struct:taskstate
+tabsize	cmain.c	/^    unsigned long tabsize;  $/;"	m	struct:aout_symbol_table	file:
+taskstate	include/mmu.h	/^struct taskstate {$/;"	s
+true	include/types.h	16;"	d
+type	include/mmu.h	/^  uint type : 4;        \/\/ type(STS_{IG32,TG32})$/;"	m	struct:gatedesc
+type	include/mmu.h	/^  uint type : 4;       \/\/ Segment type (see STS_ constants)$/;"	m	struct:segdesc
+u	cmain.c	/^    } u;  $/;"	m	struct:multiboot_info	typeref:union:multiboot_info::__anon1	file:
+u16	include/types.h	/^typedef uint16_t        u16;$/;"	t
+u32	include/types.h	/^typedef uint32_t        u32;$/;"	t
+u64	include/types.h	/^typedef uint64_t        u64;$/;"	t
+u8	include/types.h	/^typedef uint8_t         u8; $/;"	t
+uchar	include/types.h	/^typedef unsigned char  uchar;$/;"	t
+uint	include/types.h	/^typedef unsigned int   uint;$/;"	t
+ulong	include/types.h	/^typedef unsigned long   ulong;$/;"	t
+ushort	include/types.h	/^typedef unsigned short ushort;$/;"	t
+v	include/spinlock.h	/^    unsigned int v;$/;"	m	struct:spinlock
+vga	console.c	/^static uint16_t *vga = (uint16_t *)0xb8000;$/;"	v	file:
+video	cmain.c	/^static volatile unsigned char *video; \/* 指向显存。 *\/  $/;"	v	file:
+vprintf	printf.c	/^int vprintf(const char *fmt, va_list va)$/;"	f
+vsnprintf	printf.c	/^int vsnprintf(char *buf, int size, const char *fmt, va_list va)$/;"	f
+write_reg	console.c	/^static void write_reg(char reg, char val)$/;"	f	file:
+xpos	cmain.c	/^static int xpos; \/* X 坐标。 *\/  $/;"	v	file:
+ypos	cmain.c	/^static int ypos; \/* Y 坐标。 *\/  $/;"	v	file:
