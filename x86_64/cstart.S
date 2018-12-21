@@ -7,7 +7,7 @@
 #     insmod part_msdos
 #     insmod ext2
 #     set root='hd0,msdos1'
-#     multiboot /boot/vmmbench.64
+#     multiboot /boot/hyperbench.64
 # }
 
 #include "asm.h"
@@ -33,9 +33,6 @@
 //_start = V2P_WO(entry)
 
 # Entering HyperBench kernel on boot processor, with paging off.
-
-
-
 
 .globl entry
 entry:
@@ -78,11 +75,13 @@ start64:
         mov %rbx, %rdi
 	call main
 
-
-
+/***********************************************************************/
 .data
-/* Linear-Address Translation to a 2-MByte Page using 4-Level Paging */
 
+pt_root:        .quad ptl4
+mb_boot_info:   .quad 0
+
+/* Linear-Address Translation to a 2-MByte Page using 4-Level Paging */
 .align 4096
 .globl ptl2
 ptl2:
@@ -105,9 +104,6 @@ ptl4:
 
 .align 4096
 
-
-pt_root:        .quad ptl4
-mb_boot_info:   .quad 0
 
 gdt64_desc:
         .word gdt64_end - gdt64 - 1 
@@ -133,7 +129,7 @@ gdt64:
 	.quad 0
 gdt64_end:
 
-
+/*******************************************************************************/
 .align 4096
 .bss
 
