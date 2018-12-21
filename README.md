@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # HyperBench
 
+Organize the folder
 
-
-=======
-# HyperBench
->>>>>>> b78ae5fac5fc0c61ef8e784b09bc1029f0bf668d
