@@ -6,8 +6,9 @@
 // Bootstrap processor starts running C code here.
 int main()
 {
-    console_init();
-    console_putc('W');
+    //console_init();
+    //console_putc('W');
+    printf("TEST = %d\n", 10);
     while(1);
     return 0;
 }

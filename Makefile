@@ -11,6 +11,11 @@ AS = gas
 LD = ld
 AR = ar
 
+OBJS += \
+	lib/printf.o\
+	lib/string.o\
+	lib/stack.o\
+	lib/abort.o
 
 include $(ARCH)/Makefile
 
@@ -39,12 +44,12 @@ CFLAGS += -I $(BASEDIR)/include
 
 ASFLAGS = -m64 -I $(BASEDIR)/include
 
-kernel: $(OBJS) $(ARCH)/cstart.o $(ARCH)/kernel.ld
+kernel: $(OBJS) $(ARCH)/cstart.o
 	$(LD) $(LDFLAGS) -T $(ARCH)/kernel.ld -o hyperbench.64 $(ARCH)/cstart.o $(OBJS)
 	objcopy --input-target=elf64-x86-64 --output-target=elf32-i386 $(HYPERBENCH64) $(HYPERBENCH32)
 
 
 clean:
-	rm -f $(ARCH)/*.o $(ARCH)/.*.d hyperbench.*
+	rm -f $(ARCH)/*.o $(ARCH)/.*.d lib/*.o lib/.*.d hyperbench.*
 
 

@@ -21,7 +21,9 @@ typedef unsigned short ushort;
 typedef unsigned char  uchar;
 typedef uint pde_t;
 
-
+typedef u64			phys_addr_t;
+typedef unsigned long		uintptr_t;
+typedef unsigned long		size_t;
 
 
 

@@ -1,7 +1,13 @@
+#include "defs.h"
 #include "types.h"
+#include "spinlock.h"
 
 #define ROWS    25
 #define COLUMNS 80
+
+static struct spinlock lock;
+
+static int console_cleared = 0;
 
 static unsigned int cur_x, cur_y;
 static uint16_t *vga = (uint16_t *)0xb8000;
@@ -77,6 +83,23 @@ void console_putc(char ch)
                         new_line();
                 }
         }
+}
+
+void console_puts(const char *buf)
+{
+    spin_lock(&lock);   
+    unsigned long len = strlen(buf);
+    unsigned long i;
+        
+    if (!console_cleared) {
+        console_init();
+        console_cleared = 1;
+    }   
+
+    for(i = 0; i < len; i++){
+        console_putc(buf[i]);
+    }   
+    spin_unlock(&lock);
 }
 
 
