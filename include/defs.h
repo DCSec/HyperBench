@@ -14,9 +14,17 @@
 #define MIN(a, b)		((a) < (b) ? (a) : (b))
 #define MAX(a, b)		((a) > (b) ? (a) : (b))
 
+//mp.c
+void mpinit(void);
+
 //abort.c
 extern void exit(int code);
 extern void abort(void);
+
+//apic.c
+void mask_pic_interrupts(void);
+void enable_apic(void);
+
 
 //stack.c
 extern void dump_stack(void);
