@@ -3,6 +3,8 @@ OBJS += \
 	$(ARCH)/serial.o\
 	$(ARCH)/apic.o\
 	$(ARCH)/mp.o\
+	$(ARCH)/proc.o\
         $(ARCH)/main.o
+
 
 

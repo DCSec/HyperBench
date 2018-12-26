@@ -5,10 +5,9 @@
  * under the terms of the GNU Library General Public License version 2.
  */
 
+#include "types.h"
 #include <stack.h>
 #include "defs.h"
-#include "types.h"
-
 
 #define MAX_DEPTH 20
 

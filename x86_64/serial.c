@@ -1,5 +1,6 @@
-#include "defs.h"
+
 #include "types.h"
+#include "defs.h"
 #include "io.h"
 #include "spinlock.h"
 

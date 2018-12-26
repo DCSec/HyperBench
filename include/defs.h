@@ -17,11 +17,16 @@
 //mp.c
 void mpinit(void);
 
+//proc.c
+struct cpu*     mycpu(void);
+
 //abort.c
 extern void exit(int code);
 extern void abort(void);
 
 //apic.c
+extern volatile uint*    lapic;
+int             lapicid(void);
 void mask_pic_interrupts(void);
 void enable_apic(void);
 

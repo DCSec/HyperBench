@@ -13,7 +13,6 @@
 #include "proc.h"
 #include "io.h"
 
-volatile uint *lapic;  //Copy from lapic.c Initialized in mp.c
 
 struct cpu cpus[NCPU];
 int ncpu;
@@ -132,6 +131,7 @@ mpinit(void)
     printf("Expect to run on an SMP");
   ismp = 1;
   lapic = (uint*)((uint64_t)(conf->lapicaddr));
+
   for(p=(uchar*)(conf+1), e=(uchar*)conf+conf->length; p<e; ){
     switch(*p){
     case MPPROC:
@@ -169,8 +169,7 @@ mpinit(void)
     //outb(0x23, inb(0x23) | 1);  // Mask external interrupts.
     outb(inb(0x23) | 1, 0x23);  // Mask external interrupts.
   }
-  printf("The number of processors : %d\n", ncpu);
-  for(int i = 0; i < ncpu; i++){
-    printf("apicid = %d\n",cpus[i].apicid);
-  }
+
 }
+
+

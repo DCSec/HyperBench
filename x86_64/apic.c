@@ -4,8 +4,14 @@
 #include "defs.h"
 #include "apic.h"
 
+// Local APIC registers, divided by 4 for use as uint[] indices.
+#define ID      (0x0020/4)   // ID
+
+
 void *g_apic = (void *)0xfee00000;
 void *g_ioapic = (void *)0xfec00000;
+
+volatile uint *lapic;  // Initialized in mp.c
 
 struct apic_ops {
     u32 (*reg_read)(unsigned reg);
@@ -227,6 +233,15 @@ void mask_pic_interrupts(void)
 {
     outb(0xff, 0x21);
     outb(0xff, 0xa1);
+}
+
+int
+lapicid(void)
+{
+  if (!lapic)
+    return 0;
+  //printf("lapicid = %d\n",lapic[ID]);
+  return lapic[ID] >> 24; 
 }
 
 

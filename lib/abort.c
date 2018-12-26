@@ -3,6 +3,7 @@
  *
  * This work is licensed under the terms of the GNU LGPL, version 2.
  */
+#include "types.h"
 #include "defs.h"
 
 /*

@@ -115,4 +115,12 @@ static inline void sti(void)
     asm volatile ("sti");
 }
 
+static inline uint64_t
+readeflags(void)
+{
+  uint64_t eflags;
+  asm volatile("pushf; pop %0" : "=r" (eflags));
+  return eflags;
+}
+
 
