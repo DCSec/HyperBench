@@ -60,6 +60,6 @@ entryother: $(ARCH)/entryother.S
 
 
 clean:
-	rm -f entryother *.o *.asm *.sym $(ARCH)/*.o $(ARCH)/.*.d lib/*.o lib/.*.d hyperbench.*
+	rm -f entryother *.d *.o *.asm *.sym $(ARCH)/*.o $(ARCH)/.*.d lib/*.o lib/.*.d hyperbench.*
 
 
