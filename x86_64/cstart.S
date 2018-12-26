@@ -37,6 +37,7 @@
 .globl entry
 entry:
 	mov %ebx, mb_boot_info
+	mov %eax, mb_magic
         mov $stacktop, %esp
 	call prepare_64
 	jmpl $8, $start64
@@ -73,6 +74,8 @@ efer = 0xC0000080
 start64:
 	mov mb_boot_info(%rip), %rbx
         mov %rbx, %rdi
+	mov mb_magic(%rip), %rbx
+	mov %rbx, %rsi
 	call main
 
 /***********************************************************************/
@@ -80,6 +83,7 @@ start64:
 
 pt_root:        .quad ptl4
 mb_boot_info:   .quad 0
+mb_magic:	.quad 0
 
 /* Linear-Address Translation to a 2-MByte Page using 4-Level Paging */
 .align 4096

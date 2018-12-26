@@ -37,12 +37,12 @@ mpsearch1(phys_addr_t a, int len)
 
 //  addr = P2V(a);
   addr = (void *)((char *)(a));
-  printf("addr = %lx\n", a);
+//  printf("addr = %lx\n", a);
   e = addr+len;
   for(p = addr; p < e; p += sizeof(struct mp))
     if(memcmp(p, "_MP_", 4) == 0 && sum(p, sizeof(struct mp)) == 0)
       {
-        printf("_MP_\n");
+//        printf("_MP_\n");
         return (struct mp*)p;
       }
   return 0;
@@ -65,29 +65,29 @@ mpsearch(void)
   bda = (uchar *) (0x400);
   if((p = ((bda[0x0F]<<8)| bda[0x0E]) << 4)){
 #ifdef __BARE_METAL  
-    printf("bad[0x0F] = %x\n",bda[0x0F]);
-    printf("bad[0x0E] = %x\n",bda[0x0E]);
-    printf("p = %lx\n",p);
+//    printf("bad[0x0F] = %x\n",bda[0x0F]);
+//    printf("bad[0x0E] = %x\n",bda[0x0E]);
+//    printf("p = %lx\n",p);
 #endif
     if((mp = mpsearch1(p, 1024)))
       {
-        printf("in the first KB of the EBDA\n");
+        printf("MP in the first KB of the EBDA\n");
         return mp;
       }
   } else {
     p = ((bda[0x14]<<8)|bda[0x13])*1024;
 #ifdef __BARE_METAL  
-    printf("bad[0x14] = %x\n",bda[0x14]);
-    printf("bad[0x13] = %x\n",bda[0x13]);
-    printf("p = %lx\n",p);
+//    printf("bad[0x14] = %x\n",bda[0x14]);
+//    printf("bad[0x13] = %x\n",bda[0x13]);
+//    printf("p = %lx\n",p);
 #endif
     if((mp = mpsearch1(p-1024, 1024)))
       {
-        printf("in the last KB of system base memory\n");
+        printf("MP in the last KB of system base memory\n");
         return mp;
       }
   }
-  printf("in the BIOS ROM between 0xE0000 and 0xFFFFF\n");
+  printf("MP in the BIOS ROM between 0xE0000 and 0xFFFFF\n");
   return mpsearch1(0xF0000, 0x10000);
 }
 

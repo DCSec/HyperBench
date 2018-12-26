@@ -5,13 +5,17 @@
 #include "mmu.h"
 #include "proc.h"
 
+// An address symbol in kernel.ld
+extern char _HEAP_START; 
+
 static void startothers(void);
 static void list_apicid(void);
 
 // Bootstrap processor starts running C code here.
-int main()
+int main(void *mb_info, int magic)
 {
-    
+    printf("magic = %x, mb_info = %p\n", magic, mb_info);
+    early_mem_init(mb_info);
     mask_pic_interrupts(); //close interrupt
     enable_apic();   // enable local apic
     mpinit();        // detect other processors

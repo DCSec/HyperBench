@@ -4,6 +4,7 @@ OBJS += \
 	$(ARCH)/apic.o\
 	$(ARCH)/mp.o\
 	$(ARCH)/proc.o\
+	$(ARCH)/heap.o\
         $(ARCH)/main.o
 
 
