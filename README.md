@@ -15,11 +15,11 @@ HyperBench is a custom kernel designed to trigger various hypervisor-level event
 [MultiProcessor Specification](https://en.wikipedia.org/wiki/MultiProcessor_Specification)
 
 **检测CPU个数**
--Search for the MP Floating Pointer Structure, which according to **MultiProcessor Specification** is in one of the following three locations:
+- Search for the MP Floating Pointer Structure, which according to **MultiProcessor Specification** is in one of the following three locations:
  1) in the first KB of the EBDA;
  2) in the last KB of system base memory;
  3) in the BIOS ROM between 0xE0000 and 0xFFFFF.
--Search for an MP configuration table.
+- Search for an MP configuration table.
 
 ### Multiboot Specification
 
