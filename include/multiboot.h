@@ -8,7 +8,8 @@ struct mbi_bootinfo {
         u32 cmdline;
         u32 mods_count;
         u32 mods_addr;
-        u32 reserved[5];   /* 28-47 */
+        u32 reserved[4];   /* 28-39 */
+	u32 mmap_length;
         u32 mmap_addr;
         u32 reserved0[3];  /* 52-63 */
         u32 bootloader;
@@ -16,6 +17,15 @@ struct mbi_bootinfo {
         u32 size;
 };
 
+
+
+typedef struct mmap_entry_t
+{
+    uint32_t size; 
+    uint64_t base_addr;
+    uint64_t length;
+    uint32_t type;
+}__attribute__((packed)) mmap_entry_t;
 
 
 

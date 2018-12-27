@@ -16,7 +16,7 @@
 #include "param.h"
 
 #define MULTIBOOT_HEADER_MAGIC 0x1BADB002
-#define MULTIBOOT_HEADER_FLAGS 0x00000003
+#define MULTIBOOT_HEADER_FLAGS 0x00000043
 
 # Multiboot header.  Data to direct multiboot loader.
 .code32
