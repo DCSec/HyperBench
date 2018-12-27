@@ -11,10 +11,12 @@ void show_memory_map(struct mbi_bootinfo *glb_mboot_ptr)
  
     mmap_entry_t *mmap = (mmap_entry_t *)(uint64_t) mmap_addr;
 
+    heap_end = 0;    
+
     for ( ; (uint64_t)mmap < mmap_addr + mmap_length; mmap++)
     {
-        //printf("%x\n",(uint64_t) mmap->base_addr_low);
-        printf("%x\n",(uint64_t) mmap->length);
+        heap_end = heap_end + mmap->length;
+//        printf("%x\n",(uint64_t) mmap->length);
     }
 }
 
@@ -22,9 +24,12 @@ void show_memory_map(struct mbi_bootinfo *glb_mboot_ptr)
 void early_mem_init(struct mbi_bootinfo *bootinfo)
 {
     u64 end_of_memory = bootinfo->mem_upper * 1024ull;
-    printf("mbi->mmap_addr = %x\n", bootinfo->mmap_addr);
-    printf("mbi->mmap_length = %x\n", bootinfo->mmap_length);
+//    printf("mbi->mmap_addr = %x\n", bootinfo->mmap_addr);
+//    printf("mbi->mmap_length = %x\n", bootinfo->mmap_length);
     show_memory_map(bootinfo);
+    
+    printf("Total Memory : %d MB\n", heap_end >> 20);
+
 }
 
 
