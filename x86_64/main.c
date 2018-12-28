@@ -15,7 +15,7 @@ static void list_apicid(void);
 int main(void *mb_info, int magic)
 {
     printf("magic = %x, mb_info = %p\n", magic, mb_info);
-    early_mem_init(mb_info);
+    early_mem_init((uintptr_t)&_HEAP_START, mb_info);
     mask_pic_interrupts(); //close interrupt
     enable_apic();   // enable local apic
     mpinit();        // detect other processors
