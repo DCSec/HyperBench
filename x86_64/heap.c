@@ -3,9 +3,12 @@
 #include "mmu.h"
 
 uintptr_t heap_base, heap_end; 
-size_t heap_size;
+static void *freelist = 0;
 
-void show_memory_map(struct mbi_bootinfo *glb_mboot_ptr)
+/*
+    Get the memory map of the machine provided by the BIOS.
+*/
+void get_memory_map(struct mbi_bootinfo *glb_mboot_ptr)
 {
     uint32_t mmap_addr = glb_mboot_ptr->mmap_addr;
     uint32_t mmap_length = glb_mboot_ptr->mmap_length;
@@ -21,21 +24,56 @@ void show_memory_map(struct mbi_bootinfo *glb_mboot_ptr)
     }
 }
 
+/*
+* Place the pages after _HEAP_START on free list.
+*/
+void *get_free_pages(void *mem, unsigned long size)
+{
+    
+    void *old_freelist;
+    void *end;
 
+    if(size == 0) {
+    
+        return 0;  
+    }   
+
+    old_freelist = freelist;
+    freelist = mem;
+    end = mem + size;
+    
+    while (mem + PAGE_SIZE != end) {
+        *(void **)mem = (mem + PAGE_SIZE);
+        mem += PAGE_SIZE;
+    }   
+
+    *(void **)mem = old_freelist;
+ 
+    return freelist;
+}
+
+/*
+    
+*/
 void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
 {
 //    u64 end_of_memory = bootinfo->mem_upper * 1024ull;
 //    printf("mbi->mmap_addr = %x\n", bootinfo->mmap_addr);
 //    printf("mbi->mmap_length = %x\n", bootinfo->mmap_length);
-    show_memory_map(bootinfo);
+    get_memory_map(bootinfo);
     
     heap_base = (base_addr + PAGE_SIZE - 1) & (-PAGE_SIZE);
     heap_end = heap_end & (-PAGE_SIZE);
-    heap_size = heap_end - heap_base;
 
     printf("Memory Start: %x B\n", heap_base);
     printf("Memory End: %x B\n", heap_end);
     printf("Total Memory: %d MB\n", heap_end >> 20);
+
+    freelist = 0;
+    if(freelist == 0){
+        get_free_pages((void *)heap_base, heap_end - heap_base);
+    }    
+
 }
 
 
