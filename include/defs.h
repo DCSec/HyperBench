@@ -20,6 +20,9 @@ void mpinit(void);
 //proc.c
 struct cpu*     mycpu(void);
 
+//heap.c
+void *heap_alloc_page();
+
 //abort.c
 extern void exit(int code);
 extern void abort(void);

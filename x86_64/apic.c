@@ -4,6 +4,28 @@
 #include "defs.h"
 #include "apic.h"
 
+
+// Spin for a given number of microseconds.
+// On real hardware would want to tune this dynamically.
+void
+microdelay(int us) 
+{
+}
+
+// Start additional processor running entry code at addr.
+void
+lapicstartap(uchar apicid, uint addr)
+{
+  // "The BSP must initialize CMOS shutdown code to 0AH
+  // and the warm reset vector (DWORD based at 40:67) to point at
+  // the AP startup code prior to the [universal startup algorithm]."
+
+
+
+}
+
+
+
 // Local APIC registers, divided by 4 for use as uint[] indices.
 #define ID      (0x0020/4)   // ID
 

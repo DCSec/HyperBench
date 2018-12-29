@@ -76,6 +76,27 @@ void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
 
 }
 
+/* 
+ Allocate one 4096-byte page of physical memory.
+ Returns a pointer that the kernel can use.
+ Returns 0 if the memory cannot be allocated.
+*/
+void *heap_alloc_page(void)
+{
+    void *page;
+    //fprintf(OUTPUT, "%p ", freelist);
+    if (!freelist) {
+        printf("freelist uninitialized!\n");
+        return 0;
+    }   
+    
+    page = freelist;
+    freelist = *(void **)freelist;
+
+    __fast_zero_page(page);
+    return page;
+}
+
 
 
 
