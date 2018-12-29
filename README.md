@@ -7,6 +7,11 @@ HyperBench is a custom kernel designed to trigger various hypervisor-level event
 
 ## Appendix
 
+### To do list
+1. AP enter long mode(entryother.S)
+2. The BSP should place the BIOS AP initialization code at 000VV000H, where VV is the vector contained in the SIPI message.
+3. Passing parameters to entryother.S on the BSP stack.
+
 ### [Multiboot Specification](https://www.gnu.org/software/grub/manual/multiboot/multiboot.html)
 
 **Getting the memory map of the machine provided by the BIOS**
@@ -28,5 +33,4 @@ HyperBench is a custom kernel designed to trigger various hypervisor-level event
 
 如果EBDA（Extended BIOS Data Area,扩展BIOS数据区）不存在，BDA[0x0E]和BDA[0x0F]的值为0；如果EBDA存在，其段地址被保存在BDA[0x0E]和BDA[0x0F]中，其中BDA[0x0E]保存EBDA段地址的低8位，BDA[0x0F]保存EDBA段地址的高8位，所以(BDA[0x0F] << 8) | BDA[0x0E]就表示了EDBA的段地址，将段地址左移4位即为EBDA的物理地址。在HyperBench中，BDA[0x0F]=0x9F，BDA[0x0E]=0xC0，所以EBDA存在且段地址为0x9FC0，物理地址为0x9FC00。
 
-The BSP should place the BIOS AP initialization code at 000VV000H, where VV is the vector contained in the SIPI message.
 
