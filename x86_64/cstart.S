@@ -76,7 +76,61 @@ start64:
         mov %rbx, %rdi
 	mov mb_magic(%rip), %rbx
 	mov %rbx, %rsi
+//	call sipi_entry_mov
 	call main
+
+/***********************************************************************/
+smp_stacktop:	.long 0xa0000
+.code16
+sipi_entry:
+	mov %cr0, %eax
+	or $1, %eax
+	mov %eax, %cr0
+	lgdtl gdt32_descr - sipi_entry
+	ljmpl $8, $ap_start32
+
+gdt32_descr:
+	.word gdt32_end -gdt32 -1
+	.long gdt32
+
+gdt32:
+	.quad 0
+	.quad 0x00cf9b000000ffff // flat 32-bit code segment
+	.quad 0x00cf93000000ffff // flat 32-bit data segment
+gdt32_end:
+
+sipi_end:
+
+.code32
+ap_start32:
+	# Set up the protected-mode data segment registers
+	mov    $(SEG_KDATA<<3), %ax    # Our data segment selector
+	mov %ax, %ds
+	mov %ax, %es
+	mov %ax, %fs
+	mov %ax, %gs
+	mov %ax, %ss
+	mov $-4096, %esp
+	lock/xaddl %esp, smp_stacktop
+	call prepare_64
+	ljmpl $8, $ap_start64
+
+.code64
+ap_start64:
+	call mpenter	
+1:
+	hlt
+	jmp 1b
+
+.globl sipi_entry_mov
+sipi_entry_mov:
+	cld
+	lea sipi_entry, %rsi
+	xor %rdi, %rdi
+	mov $(sipi_end - sipi_entry), %rcx
+	rep/movsb
+	call DEBUG
+	ret
 
 /***********************************************************************/
 .data
@@ -134,12 +188,15 @@ gdt64:
 gdt64_end:
 
 /*******************************************************************************/
+max_cpus = 64
 .align 4096
 .bss
-
+	. = . + 4096 * max_cpus
+	.align 16
+stacktop:
         . = . + 4096
         .align 16
-stacktop:
+ring0stacktop:
 
 
 

@@ -55,22 +55,38 @@ start32:
   movw    %ax, %fs                # -> FS
   movw    %ax, %gs                # -> GS
 
-  # Turn on page size extension for 4Mbyte pages
-  movl    %cr4, %eax
-  orl     $(CR4_PSE), %eax
-  movl    %eax, %cr4
+prepare_64:
+  lgdt gdt64_desc
+  # Turn on page size extension for 2Mbyte pages
+  mov %cr4, %eax
+  orl $(CR4_PSE), %eax
+  mov %eax, %cr4
+
+efer = 0xC0000080
+  mov $efer, %ecx
+  rdmsr
+  bts $8, %eax
+  wrmsr
+
   # Use entrypgdir as our initial page table
-  movl    (start-12), %eax
+  movl    (start-24), %eax
   movl    %eax, %cr3
+
   # Turn on paging.
   movl    %cr0, %eax
-  orl     $(CR0_PE|CR0_PG|CR0_WP), %eax
+  orl     $(CR0_PE|CR0_PG), %eax
   movl    %eax, %cr0
 
+  ljmpl $8, $ap_start64
+
+
+.code64
+ap_start64:
+
   # Switch to the stack allocated by startothers()
-  movl    (start-4), %esp
+  movl    (start-8), %esp
   # Call mpenter()
-  call	 *(start-8)
+  call	 *(start-16)
 
   movw    $0x8a00, %ax
   movw    %ax, %dx
@@ -78,6 +94,7 @@ start32:
   movw    $0x8ae0, %ax
   outw    %ax, %dx
 spin:
+  hlt
   jmp     spin
 
 .p2align 2
@@ -90,4 +107,30 @@ gdt:
 gdtdesc:
   .word   (gdtdesc - gdt - 1)
   .long   gdt
+
+gdt64:
+	.quad 0
+	.quad 0x00af9b000000ffff // 64-bit code segment
+	.quad 0x00cf93000000ffff // 32/64-bit data segment
+	.quad 0x00af1b000000ffff // 64-bit code segment, not present
+	.quad 0x00cf9b000000ffff // 32-bit code segment
+	.quad 0x008f9b000000FFFF // 16-bit code segment
+	.quad 0x008f93000000FFFF // 16-bit data segment
+	.quad 0x00cffb000000ffff // 32-bit code segment (user)
+	.quad 0x00cff3000000ffff // 32/64-bit data segment (user)
+	.quad 0x00affb000000ffff // 64-bit code segment (user)
+
+	.quad 0			 // 6 spare selectors
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+
+gdt64_end:
+
+gdt64_desc:
+	.word gdt64_end - gdt64 - 1
+	.quad gdt64
+
 

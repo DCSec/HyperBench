@@ -30,13 +30,14 @@ int main(void *mb_info, int magic)
 
 
 // Other CPUs jump here from entryother.S.
-static void
-mpenter(void)
+//static void mpenter(void)
+void mpenter(void)
 {
   //switchkvm();
   //seginit();
   //lapicinit();
   //mpmain();
+  xchg(&(mycpu()->started), 1); // tell startothers() we're up
   printf("AP ");
 }
 
@@ -45,6 +46,7 @@ mpenter(void)
 static void startothers(void)
 {
 /*
+CFLAG += -b binary entryother
 When create *_start, *_end and _size symbols, corresponded to the binary data, the linker produces the prefix from its command-line argument as it is.
 
 That is, the linker uses:
@@ -53,32 +55,25 @@ That is, the linker uses:
     a prefix _binary_img_entryother_ for argument img/entryother.
 */
 
-    extern uchar _binary_entryother_start[], _binary_entryother_size[];
-    uchar *code;
+//    extern uchar _binary_entryother_start[], _binary_entryother_size[];
+//    uchar *code;
     struct cpu *c; 
     char *stack;
-    uint64_t page_root;
-/* 
-    Write entry code to unused memory at 0x7000.
-    The linker has placed the image of entryother.S in
-    _binary_entryother_start.
+/*
+    The BSP should place the BIOS AP initialization code at 000VV000H, 
+    where VV is the vector contained in the SIPI message. 
+    Write entry code to unused memory at 0x0000.
 */
-    code = (void *)((char *)(0x7000));
-    memmove(code, _binary_entryother_start, (uint64_t)_binary_entryother_size);    
+    sipi_entry_mov();
 
     for(c = cpus; c < cpus+ncpu; c++){
       if(c == mycpu())  // We've started already.
           continue;
-          //printf("EAP ");  
-    // Tell entryother.S what stack to use, where to enter, and what
-    // pgdir to use. We cannot use kpgdir yet, because the AP processor
-    // is running in low  memory, so we use entrypgdir for the APs too.
-          stack = heap_alloc_page();
-          page_root = read_cr3();
-          *(void**)(code-4) = stack + KSTACKSIZE;
-          *(void(**)(void))(code-8) = mpenter;
-          *(int**)(code-12) = (void *) page_root;
-    }
+   
+          lapicstartap(c->apicid, (void *)0x00);
+          // wait for cpu to finish mpmain()
+          while(c->started == 0);
+     }
 
 }
 
@@ -93,5 +88,10 @@ static void list_apicid(void)
         printf("%5d ",cpus[i].apicid);
     }
     printf("\n");
+}
+
+void DEBUG()
+{
+    printf("move done!\n");
 }
 
