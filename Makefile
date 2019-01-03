@@ -1,5 +1,6 @@
 BASEDIR	:= $(shell pwd)
 ARCH    := $(shell uname -m)
+OUT	:= $(BASEDIR)/out
 HYPERBENCH_DIRS         := $(ARCH) lib benchmark
 
 HYPERBENCH64 := hyperbench.64
@@ -48,11 +49,12 @@ ASFLAGS = -m64 -I $(BASEDIR)/include
 
 #kernel: $(OBJS) $(ARCH)/cstart.o entryother
 kernel: $(OBJS) $(ARCH)/cstart.o
+	mkdir $(OUT)
 #	$(LD) $(LDFLAGS) -T $(ARCH)/kernel.ld -o hyperbench.64 $(ARCH)/cstart.o $(OBJS) -b binary entryother
-	$(LD) $(LDFLAGS) -T $(ARCH)/kernel.ld -o hyperbench.64 $(ARCH)/cstart.o $(OBJS)
-	objcopy --input-target=elf64-x86-64 --output-target=elf32-i386 $(HYPERBENCH64) $(HYPERBENCH32)
-	$(OBJDUMP) -S $(HYPERBENCH32) > hyperbench32.asm
-	$(OBJDUMP) -t $(HYPERBENCH32) | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > hyperbench32.sym
+	$(LD) $(LDFLAGS) -T $(ARCH)/kernel.ld -o $(OUT)/hyperbench.64 $(ARCH)/cstart.o $(OBJS)
+	objcopy --input-target=elf64-x86-64 --output-target=elf32-i386 $(OUT)/$(HYPERBENCH64) $(OUT)/$(HYPERBENCH32)
+	$(OBJDUMP) -S $(OUT)/$(HYPERBENCH32) > $(OUT)/hyperbench32.asm
+	$(OBJDUMP) -t $(OUT)/$(HYPERBENCH32) | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > $(OUT)/hyperbench32.sym
 
 #entryother: $(ARCH)/entryother.S
 #	$(CC) -fno-pic -static -fno-builtin -fno-strict-aliasing -O0 -Wall -MD -m64 -Werror -fno-omit-frame-pointer -fno-stack-protector -fno-pic -nostdinc -I $(BASEDIR)/include -c $(ARCH)/entryother.S
@@ -62,6 +64,7 @@ kernel: $(OBJS) $(ARCH)/cstart.o
 
 
 clean:
-	rm -f entryother *.d *.o *.asm *.sym $(ARCH)/*.o $(ARCH)/.*.d lib/*.o lib/.*.d hyperbench.*
+	rm -f $(ARCH)/*.o $(ARCH)/.*.d lib/*.o lib/.*.d
+	rm -rf $(OUT)
 
 
