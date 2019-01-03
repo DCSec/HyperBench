@@ -9,9 +9,10 @@ HyperBench is a custom kernel designed to trigger various hypervisor-level event
 
 ## Appendix
 
-### The boot page table 
+### The boot page table
+Linear-Address Translation to 2-MByte Pages using 4-Level Paging(1:1) 
 - ptl2: 2MB \* 2048 page tables entries. Each page table entry is 8Bytes. 4 pages.
-- ptl3：所占内存大小4k(因为4k对齐，所以占用了4k内存空间),实际只有4项，分别指向ptl2的4个页表。
+- ptl3: 4 page table entries and each points to a ptl3 page.
 - ptl4: 1 page table entry that points to ptl3.
 
 ### [Multiboot Specification](https://www.gnu.org/software/grub/manual/multiboot/multiboot.html)
