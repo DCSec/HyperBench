@@ -1,0 +1,2 @@
+OBJS += harness/harness.o
+

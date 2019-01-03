@@ -8,7 +8,7 @@
 #include <string.h>
 #include "types.h"
 
-#define __BARE_METAL
+//#define __BARE_METAL
 
 #define __unused __attribute__((__unused__))
 

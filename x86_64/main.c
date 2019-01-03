@@ -23,9 +23,10 @@ int main(void *mb_info, int magic)
     mpinit();        // detect other processors
     list_apicid();   // list all apic id
     startothers();
+    harness_main();
     printf("sizeof(void *) = %d\n", (int)sizeof(void *));
-    while(1);        //hold the console, or it will restart infinitely
-    return 0;
+//    while(1);        //hold the console, or it will restart infinitely
+//    return 0;
 }
 
 

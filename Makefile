@@ -22,6 +22,7 @@ OBJS += \
 
 include $(ARCH)/Makefile
 include benchmark/Makefile
+include harness/Makefile
 
 autodepend-flags = -MMD -MF $(dir $*).$(notdir $*).d
 
