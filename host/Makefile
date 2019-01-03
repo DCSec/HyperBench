@@ -1,9 +1,9 @@
 
 host : host.c
-	@echo "CCLD $@"
+#	@echo "CCLD $@"
 	gcc $^ -o $@ -g -O0
 
 clean:
-	@echo "RM host"
+#	@echo "RM host"
 	rm -f host
 
