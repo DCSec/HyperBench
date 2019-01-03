@@ -9,10 +9,9 @@ HyperBench is a custom kernel designed to trigger various hypervisor-level event
 
 ## Appendix
 
-### To do list
-1. AP enter long mode(entryother.S)
-2. The BSP should place the BIOS AP initialization code at 000VV000H, where VV is the vector contained in the SIPI message.
-3. Passing parameters to entryother.S on the BSP stack.
+### The boot page table 
+- ptl2: 所占内存大小4\*4k，2048项PTE，每一项PTE占8Bytes，页框大小为2M
+
 
 ### [Multiboot Specification](https://www.gnu.org/software/grub/manual/multiboot/multiboot.html)
 

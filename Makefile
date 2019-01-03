@@ -64,6 +64,7 @@ $(HOST):
 clean:
 	rm -f $(ARCH)/*.o $(ARCH)/.*.d lib/*.o lib/.*.d
 	rm -f harness/*.o harness/.*.d
+	rm -f benchmark/*.o benchmark/.*.d
 	rm -rf $(OUT)
 	make -C host/ clean
 
