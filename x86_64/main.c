@@ -13,6 +13,9 @@ static void startothers(void);
 //static void mpmain(void)  __attribute__((noreturn));
 static void list_apicid(void);
 
+//
+void platform_shutdown();
+
 // Bootstrap processor starts running C code here.
 int main(void *mb_info, int magic)
 {
@@ -22,11 +25,14 @@ int main(void *mb_info, int magic)
     enable_apic();   // enable local apic
     mpinit();        // detect other processors
     list_apicid();   // list all apic id
-    startothers();
-    harness_main();
+    startothers();   // start Application Processors
+    harness_main();  // run benchmarks
     printf("sizeof(void *) = %d\n", (int)sizeof(void *));
-//    while(1);        //hold the console, or it will restart infinitely
-//    return 0;
+#ifdef __BARE_METAL
+    while(1);        //hold the physical machine, or it will restart infinitely
+#else
+    platform_shutdown();
+#endif
 }
 
 
@@ -94,5 +100,26 @@ static void list_apicid(void)
 void DEBUG()
 {
     printf("move done!\n");
+}
+
+void platform_shutdown()
+{
+        asm volatile ("mov $0x80000b80, %eax");
+        asm volatile ("movw $0xcf8, %dx");
+        asm volatile ("outl %eax, %dx");
+        asm volatile ("movw $0xcfc, %dx");
+        asm volatile ("inb %dx, %al");
+        asm volatile ("orb $1, %al");
+        asm volatile ("outb %al, %dx");
+    
+        asm volatile ("movl $0x80000b40, %eax");
+        asm volatile ("movw $0xcf8, %dx");
+        asm volatile ("outl  %eax, %dx");
+        asm volatile ("movl $0x7001, %eax");
+        asm volatile ("movw $0xcfc, %dx");
+        asm volatile ("outl  %eax, %dx");
+        asm volatile ("movw $0x2000, %ax");
+        asm volatile ("movw $0x7004, %dx");
+        asm volatile ("outw  %ax, %dx");
 }
 

@@ -69,10 +69,11 @@ void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
     printf("Memory End: %x B\n", heap_end);
     printf("Total Memory: %d MB\n", heap_end >> 20);
 
+
     freelist = 0;
     if(freelist == 0){
 //        get_free_pages((void *)heap_base, heap_end - heap_base);
-        get_free_pages((void *)heap_base, 2048 * 1024 * 1024ul);
+        get_free_pages((void *)heap_base, 1ul << 31);
     }    
 
 }
