@@ -82,7 +82,7 @@ struct segdesc {
 // Page directory and page table constants.
 #define NPDENTRIES      1024    // # directory entries per page directory
 #define NPTENTRIES      1024    // # PTEs per page table
-#define PAGE_SIZE       (1ul << 12)    // bytes mapped by a page
+#define PGSIZE       (1ul << 12)    // bytes mapped by a page
 
 #define PTXSHIFT        12      // offset of PTX in a linear address
 #define PDXSHIFT        22      // offset of PDX in a linear address

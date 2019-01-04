@@ -1,6 +1,7 @@
 #include "types.h"
 #include "multiboot.h"
 #include "mmu.h"
+#include "page.h"
 
 uintptr_t heap_base, heap_end; 
 static void *freelist = 0;
@@ -99,6 +100,65 @@ void *heap_alloc_page(void)
     return page;
 }
 
+/**********************************************************************/
+/*
+* pte: the physical address of a page frame
+*
+*/
+pteval_t *install_pte(pgd_t *cr3,
+                      int pte_level,
+                      void *virt,
+                      pteval_t pte,
+                      pteval_t *pt_page)
+{
+    int level;
+    pteval_t *pt = cr3;
+    unsigned offset;
 
+    for(level = PAGE_LEVEL; level > pte_level; --level) {
+        offset = PGDIR_OFFSET((uintptr_t)virt, level);
+        if(!(pt[offset] & PT_PRESENT_MASK)) {
+            pteval_t *new_pt = pt_page;
+            if(!new_pt)
+                new_pt = heap_alloc_page();
+            else
+                pt_page = 0;
+            memset(new_pt, 0, PAGE_SIZE);
+            pt[offset] = (unsigned long)new_pt | PT_PRESENT_MASK | PT_WRITABLE_MASK | PT_USER_MASK;
+        }
+        pt = (void *)((unsigned long)(pt[offset] & PT_ADDR_MASK));
+    }
+    offset = PGDIR_OFFSET((uintptr_t)virt, level);
+    pt[offset] = pte;
+    return &pt[offset];
+}
+
+pteval_t *install_large_page(pgd_t *cr3, phys_addr_t phys, void *virt)
+{
+    return install_pte(cr3, 2, virt,
+                       phys | PT_PRESENT_MASK | PT_WRITABLE_MASK | PT_USER_MASK | PT_PAGE_SIZE_MASK, 0); 
+}
+
+pteval_t *install_page(pgd_t *cr3, phys_addr_t phys, void *virt)
+{
+    return install_pte(cr3, 1, virt, phys | PT_PRESENT_MASK | PT_WRITABLE_MASK | PT_USER_MASK, 0); 
+}
+
+void install_pages(pgd_t *cr3, phys_addr_t phys, size_t len, void *virt)
+{
+        phys_addr_t max = (u64)len + (u64)phys;
+//        assert(phys % PAGE_SIZE == 0); 
+//        assert((uintptr_t) virt % PAGE_SIZE == 0); 
+//        assert(len % PAGE_SIZE == 0);
+
+        while (phys + PAGE_SIZE <= max) {
+                install_page(cr3, phys, virt);
+                phys += PAGE_SIZE;
+                virt = (char *) virt + PAGE_SIZE;
+        }
+}
+
+
+/******************************************************************************************************/
 
 
