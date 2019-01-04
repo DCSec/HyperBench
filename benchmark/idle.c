@@ -6,12 +6,17 @@ static void init()
 {
     /*  
     */
+//    printf("install page\n");
+//    uintptr_t *cr3 = heap_alloc_page();
+//    install_pages(cr3, 0, (1ul << 32), (void *)0);
+//    printf("install page\n");
 }
 
 static inline void ALIGN kernel()
 {
     for(i = 0; i < IDLE; i++){
-    
+          uintptr_t *cr3 = heap_alloc_page();
+          install_pages(cr3, 0, (1ul << 32), (void *)0); 
     }   
 }
 
