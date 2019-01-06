@@ -2,9 +2,16 @@
 #include "multiboot.h"
 #include "mmu.h"
 #include "page.h"
+#include "processor.h"
+
 
 uintptr_t heap_base, heap_end; 
 static void *freelist = 0;
+
+static bool first_mem_init = false;
+
+uintptr_t start_cr3;
+
 
 /*
     Get the memory map of the machine provided by the BIOS.
@@ -61,6 +68,9 @@ void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
 //    u64 end_of_memory = bootinfo->mem_upper * 1024ull;
 //    printf("mbi->mmap_addr = %x\n", bootinfo->mmap_addr);
 //    printf("mbi->mmap_length = %x\n", bootinfo->mmap_length);
+  if(!first_mem_init){
+    first_mem_init = true;
+
     get_memory_map(bootinfo);
     
     heap_base = (base_addr + PAGE_SIZE - 1) & (-PAGE_SIZE);
@@ -69,14 +79,14 @@ void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
     printf("Memory Start: %x B\n", heap_base);
     printf("Memory End: %x B\n", heap_end);
     printf("Total Memory: %d MB\n", heap_end >> 20);
-
-
+  }
+  
     freelist = 0;
     if(freelist == 0){
 //        get_free_pages((void *)heap_base, heap_end - heap_base);
         get_free_pages((void *)heap_base, 1ul << 31);
     }    
-
+  
 }
 
 /* 
@@ -156,6 +166,32 @@ void install_pages(pgd_t *cr3, phys_addr_t phys, size_t len, void *virt)
                 phys += PAGE_SIZE;
                 virt = (char *) virt + PAGE_SIZE;
         }
+}
+
+void *setup_mmu(phys_addr_t end_of_memory)
+{
+    uintptr_t *cr3 = heap_alloc_page();
+    
+    if(end_of_memory == 0)
+        end_of_memory = (1ul << 32);   /* map 1:1 */
+    
+    install_pages(cr3, 0, end_of_memory, (void *)0);
+// save the original @cr3 and set the new page table root
+    start_cr3 = read_cr3();
+    write_cr3((uintptr_t)cr3);    
+
+    return cr3;
+}
+
+
+void switch_to_start_cr3()
+{
+    write_cr3(start_cr3);
+}
+
+void reset_freelist()
+{
+    get_free_pages((void *)heap_base, 1ul << 31);
 }
 
 

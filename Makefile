@@ -26,7 +26,6 @@ include harness/Makefile
 
 autodepend-flags = -MMD -MF $(dir $*).$(notdir $*).d
 
-#CFLAGS = -fno-builtin -fno-pic -static -fno-strict-aliasing -O0 -Wall -MD -ggdb -m64 -Werror -fno-omit-frame-pointer -I $(BASEDIR)/include -nostdlib
 
 CFLAGS += -mno-red-zone -mno-sse -mno-sse2
 CFLAGS += -m64 
@@ -52,7 +51,6 @@ ASFLAGS = -m64 -I $(BASEDIR)/include
 #kernel: $(OBJS) $(ARCH)/cstart.o entryother
 kernel: $(OBJS) $(ARCH)/cstart.o $(HOST)
 	mkdir $(OUT)
-#	$(LD) $(LDFLAGS) -T $(ARCH)/kernel.ld -o hyperbench.64 $(ARCH)/cstart.o $(OBJS) -b binary entryother
 	$(LD) $(LDFLAGS) -T $(ARCH)/kernel.ld -o $(OUT)/hyperbench.64 $(ARCH)/cstart.o $(OBJS)
 	objcopy --input-target=elf64-x86-64 --output-target=elf32-i386 $(OUT)/$(HYPERBENCH64) $(OUT)/$(HYPERBENCH32)
 	$(OBJDUMP) -S $(OUT)/$(HYPERBENCH32) > $(OUT)/hyperbench32.asm
