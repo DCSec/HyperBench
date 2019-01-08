@@ -1,8 +1,13 @@
 #include "types.h"
-#include "multiboot.h"
+#include "defs.h"
+//#include "multiboot.h"
 #include "mmu.h"
 #include "page.h"
 #include "processor.h"
+#include "spinlock.h"
+
+static void *vfree_top = 0;
+static struct spinlock lock;
 
 
 uintptr_t heap_base, heap_end; 
@@ -75,10 +80,11 @@ void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
     
     heap_base = (base_addr + PAGE_SIZE - 1) & (-PAGE_SIZE);
     heap_end = heap_end & (-PAGE_SIZE);
-
+#ifdef __BARE_METAL
     printf("Memory Start: %x B\n", heap_base);
     printf("Memory End: %x B\n", heap_end);
     printf("Total Memory: %d MB\n", heap_end >> 20);
+#endif
   }
   
     freelist = 0;
@@ -196,5 +202,14 @@ void reset_freelist()
 
 
 /******************************************************************************************************/
+
+void *alloc_vpages(ulong nr) 
+{
+        spin_lock(&lock);
+        vfree_top -= PAGE_SIZE * nr; 
+        spin_unlock(&lock);
+        return vfree_top;
+}
+
 
 

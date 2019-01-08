@@ -1,14 +1,14 @@
 #include "defs.h"
 
 #define IDLE		1
-#define LGDT            1000000
-#define SET_CR3         1000000
-#define SGDT            1000000
-#define SIDT            1000000
-#define SLDT            1000000
-#define SMSW            1000000
-#define PUSHF_POPF      1000000
-#define IPI             10
+#define LGDT            100000
+#define SET_CR3         100000
+#define SGDT            100000
+#define SIDT            100000
+#define SLDT            100000
+#define SMSW            100000
+#define PUSHF_POPF      100000
+#define IPI             1000
 #define HYPERCALL       1000
 #define SET_PAGE_TABLE  1
 #define COLD_ACCESS     100000

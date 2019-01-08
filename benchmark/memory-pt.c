@@ -15,7 +15,7 @@ static inline void ALIGN kernel()
     
     } 
 */
-    setup_mmu(1ul << 31);  
+    setup_mmu(1ul << 32);  
 }
 
 static inline void control()
@@ -30,7 +30,7 @@ static inline void control()
 static void cleanup()
 {
     switch_to_start_cr3();
-    early_mem_init();
+    //early_mem_init();
 }
 
 DEFINE_BENCHMARK(memory_pt) =

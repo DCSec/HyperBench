@@ -19,11 +19,15 @@ void platform_shutdown();
 // Bootstrap processor starts running C code here.
 int main(void *mb_info, int magic)
 {
+#ifdef __BARE_METAL
     printf("magic = %x, mb_info = %p\n", magic, mb_info);
+#endif
     early_mem_init((uintptr_t)&_HEAP_START, mb_info);
+    mask_pic_interrupts();
     enable_apic();
     mpinit();        // detect other processors
     startothers();   // start Application Processors
+    enable_x2apic();
     harness_main();  // run benchmarks
     printf("sizeof(void *) = %d\n", (int)sizeof(void *));
 #ifdef __BARE_METAL
@@ -38,10 +42,11 @@ int main(void *mb_info, int magic)
 //static void mpenter(void)
 void mpenter(void)
 {
+  printf("cpu%d: starting %d\n", cpuid(), cpuid());
   lidt(boot_idt, sizeof(boot_idt)-1);
   enable_apic();
   xchg(&(mycpu()->started), 1); // tell startothers() we're up
-  printf("cpu%d: starting %d\n", cpuid(), cpuid());
+  enable_x2apic(); // This funciton must behind xchg(&(mycpu()->started), 1), why?
 }
 
 /*
@@ -62,7 +67,7 @@ static void startothers(void)
       if(c == mycpu())  // We've started already.
           continue;
    
-          lapicstartap(c->apicid, (void *)0x00);
+          lapicstartap(c->apicid, 0x00);
           // wait for cpu to finish mpenter()
           while(c->started == 0);
      }

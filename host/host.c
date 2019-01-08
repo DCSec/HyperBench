@@ -109,7 +109,7 @@ int main(int argc, void **arg)
 
     /* pin each VCPU to a specific PCPU */
     if(read_symbol() == '*'){
-       do_command("/opt/hyperbench/script/pin"); 
+       do_command("./script/pin"); 
     }
     
 
@@ -121,20 +121,20 @@ int main(int argc, void **arg)
  
             time_start_char = read_time_start_char();
             if(time_start_char == '{') {
-                //before(cycles_low, cycles_high);
-		rdtsc(cycles_low, cycles_high);
+                before(cycles_low, cycles_high);
+		//rdtsc(cycles_low, cycles_high);
                 time_end_char = read_time_end_char('}');
-                //after(cycles_low1, cycles_high1);
-		rdtsc(cycles_low1, cycles_high1);
+                after(cycles_low1, cycles_high1);
+		//rdtsc(cycles_low1, cycles_high1);
             }
         
             time_start_char = read_time_start_char();
             if(time_start_char == '['){
-                //before(cycles_low2, cycles_high2);
-		rdtsc(cycles_low2, cycles_high2);
+                before(cycles_low2, cycles_high2);
+		//rdtsc(cycles_low2, cycles_high2);
                 time_end_char = read_time_end_char(']');
-                //after(cycles_low3, cycles_high3);
-		rdtsc(cycles_low3, cycles_high3);
+                after(cycles_low3, cycles_high3);
+		//rdtsc(cycles_low3, cycles_high3);
             }
 
             start = ( ((uint64_t)cycles_high << 32) | cycles_low );

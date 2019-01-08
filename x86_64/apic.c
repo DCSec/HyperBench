@@ -362,7 +362,7 @@ void set_irq_line(unsigned line, int val)
 
 void enable_apic(void)
 {
-    printf("enabling apic\n");
+//    printf("enabling apic\n");
     xapic_write(0xf0, 0x1ff); /* spurious vector register */
 }
 

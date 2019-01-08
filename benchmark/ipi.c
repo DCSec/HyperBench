@@ -1,3 +1,4 @@
+#include "defs.h"
 #include "benchmark.h"
 
 #define ITERATION IPI

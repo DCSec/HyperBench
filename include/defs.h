@@ -6,23 +6,41 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
-#include "types.h"
 
-#define __BARE_METAL
+#include "types.h"
+#include "multiboot.h"
+
+
+//#define __BARE_METAL
 
 #define __unused __attribute__((__unused__))
 
 #define MIN(a, b)		((a) < (b) ? (a) : (b))
 #define MAX(a, b)		((a) > (b) ? (a) : (b))
 
+//
+extern void __fast_zero_page(void *page);
+extern void sipi_entry_mov(void);
+
+//harness.c
+void harness_main(void);
+
 //mp.c
 void mpinit(void);
+extern void smp_init(void);
+extern void on_cpu(int cpu, void (*function)(void *data), void *data);
 
 //proc.c
 struct cpu*     mycpu(void);
+int cpuid();
 
 //heap.c
 void *heap_alloc_page();
+void switch_to_start_cr3(void);
+void *alloc_vpages(ulong nr);
+void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo);
+void *setup_mmu(phys_addr_t end_of_memory);
+pteval_t *install_page(pgd_t *cr3, phys_addr_t phys, void *virt);
 
 //abort.c
 extern void exit(int code);
@@ -33,7 +51,8 @@ extern volatile uint*    lapic;
 int             lapicid(void);
 void mask_pic_interrupts(void);
 void enable_apic(void);
-
+int enable_x2apic(void);
+void            lapicstartap(uchar, uint);
 
 //stack.c
 extern void dump_stack(void);
@@ -75,5 +94,5 @@ void console_init(void);
 void console_putc(char ch);
 void console_puts(const char *buf);
 
-#endif
+#endif  //END __DEFS_H
 

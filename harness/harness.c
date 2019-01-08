@@ -99,11 +99,7 @@ void harness_main()
        harness_execute(benchmark);
 
     }
-/*
-#ifdef __BARE_METAL
-    while(1);
-#endif
-*/
+    
     printf(STR_BENCHMARK_END);    
     printf(STR_BENCHMARK_END);    
 }

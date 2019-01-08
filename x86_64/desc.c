@@ -1,5 +1,7 @@
+#include "defs.h"
 #include "desc.h"
 #include "processor.h"
+#include "string.h"
 
 static handler exception_handlers[256];
 extern struct ex_record exception_table_start, exception_table_end;

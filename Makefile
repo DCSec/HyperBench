@@ -31,18 +31,18 @@ CFLAGS += -mno-red-zone -mno-sse -mno-sse2
 CFLAGS += -m64 
 CFLAGS += -O0
 # auto depend flags 
-CFLAGS += -g $(autodepend-flags)
+CFLAGS += -g3 $(autodepend-flags)
 #CFLAGS += -Wall -Wwrite-strings -Wclobbered -Wempty-body -Wuninitialized
 #CFLAGS += -Wignored-qualifiers -Wunused-but-set-parameter
 #CFLAGS += -Wmissing-prototypes -Wstrict-prototypes
 CFLAGS += -Werror
+CFLAGS += -ffreestanding
 CFLAGS += -fno-omit-frame-pointer
 #CFLAGS += -Wno-frame-address
 CFLAGS += -fno-pic
 CFLAGS += -fno-builtin
-CFLAGS += -static
 CFLAGS += -nostdlib
-#CFLAGS += -std=gnu99
+CFLAGS += -std=gnu99
 CFLAGS += -I $(BASEDIR)/include
 
 

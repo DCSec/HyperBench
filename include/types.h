@@ -24,6 +24,7 @@ typedef uint pde_t;
 typedef uint64_t		phys_addr_t;
 typedef unsigned long		uintptr_t;
 typedef unsigned long		size_t;
-
+typedef unsigned long pteval_t;
+typedef unsigned long pgd_t;
 
 

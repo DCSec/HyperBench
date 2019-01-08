@@ -35,20 +35,23 @@ static atomic_t active_cpus;
 
 static __attribute__((used)) void ipi()
 {
+/*
     void (*function)(void *data) = ipi_function;
     void *data = ipi_data;
     bool wait = ipi_wait;
-    
     if (!wait) {
         ipi_done = 1;
         apic_write(APIC_EOI, 0); 
     }   
     function(data);
-    //atomic_dec(&active_cpus);
+    atomic_dec(&active_cpus);
     if (wait) {
         ipi_done = 1;
         apic_write(APIC_EOI, 0); 
     }   
+*/  
+    ipi_done = 1;
+    apic_write(APIC_EOI, 0);  
 }
 
 asm (
@@ -84,11 +87,12 @@ static void do_test()
 }
 
 
-static void __on_cpu(int apicid, void (*function)(void *data), void *data,
+static void __on_cpu(int cpu, void (*function)(void *data), void *data,
                      int wait)
 {
+/*
     spin_lock(&ipi_lock);
-    if (apicid == smp_id())
+    if (cpu == smp_id())
         function(data);
     else {
         atomic_inc(&active_cpus);
@@ -98,11 +102,17 @@ static void __on_cpu(int apicid, void (*function)(void *data), void *data,
         ipi_wait = wait;
         apic_icr_write(APIC_INT_ASSERT | APIC_DEST_PHYSICAL | APIC_DM_FIXED
                        | IPI_VECTOR,
-                       apicid);
-        //lapicw(0x0310/4, apicid<<24);
-        //lapicw(0x0300/4, 0x00004000 | IPI_VECTOR);
+                       cpu);
         while (!ipi_done);
     }   
+    spin_unlock(&ipi_lock);
+*/
+    spin_lock(&ipi_lock);
+    ipi_done = 0;
+    apic_icr_write(APIC_INT_ASSERT | APIC_DEST_PHYSICAL | APIC_DM_FIXED
+                       | IPI_VECTOR,
+                       cpu); 
+    while(!ipi_done);
     spin_unlock(&ipi_lock);
 }
 
@@ -126,9 +136,9 @@ void smp_init(void)
     setup_smp_id(0);
 
     for (i = 1; i < ncpu; ++i){
-        on_cpu(cpus[i].apicid, setup_smp_id, 0);
+        on_cpu(i, setup_smp_id, 0);
     }
-    
+
     atomic_inc(&active_cpus);
 */
 }
@@ -189,7 +199,9 @@ mpsearch(void)
 #endif
     if((mp = mpsearch1(p, 1024)))
       {
+#ifdef __BARE_METAL
         printf("MP in the first KB of the EBDA\n");
+#endif
         return mp;
       }
   } else {
@@ -201,11 +213,15 @@ mpsearch(void)
 #endif
     if((mp = mpsearch1(p-1024, 1024)))
       {
+#ifdef __BARE_METAL
         printf("MP in the last KB of system base memory\n");
+#endif
         return mp;
       }
   }
+#ifdef __BARE_METAL
   printf("MP in the BIOS ROM between 0xE0000 and 0xFFFFF\n");
+#endif
   return mpsearch1(0xF0000, 0x10000);
 }
 

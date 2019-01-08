@@ -122,7 +122,8 @@ ap_start32:
 
 .code64
 ap_start64:
-	call mpenter	
+	call mpenter
+//	call enable_x2apic	
 	sti   // Enable external Interrupt
 	nop
 1:
