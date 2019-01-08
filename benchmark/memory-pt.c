@@ -15,7 +15,7 @@ static inline void ALIGN kernel()
     
     } 
 */
-    setup_mmu(1ul << 32);  
+    setup_mmu(1ul << 31);  
 }
 
 static inline void control()

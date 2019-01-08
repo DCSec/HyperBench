@@ -12,14 +12,132 @@
 #include "mmu.h"
 #include "proc.h"
 #include "io.h"
+#include "apic.h"
+#include "atomic.h"
+#include "spinlock.h"
 
+#define IPI_VECTOR 0x20
 
 struct cpu cpus[NCPU];
 int ncpu;
 uchar ioapicid;
 
-static uchar
-sum(uchar *addr, int len)
+/************************************************************************/
+typedef void (*ipi_function_type)(void *data);
+
+static struct spinlock ipi_lock;
+static volatile ipi_function_type ipi_function;
+static void *volatile ipi_data;
+static volatile int ipi_done;
+static volatile bool ipi_wait;
+static int _cpu_count;
+static atomic_t active_cpus;
+
+static __attribute__((used)) void ipi()
+{
+    void (*function)(void *data) = ipi_function;
+    void *data = ipi_data;
+    bool wait = ipi_wait;
+    
+    if (!wait) {
+        ipi_done = 1;
+        apic_write(APIC_EOI, 0); 
+    }   
+    function(data);
+    //atomic_dec(&active_cpus);
+    if (wait) {
+        ipi_done = 1;
+        apic_write(APIC_EOI, 0); 
+    }   
+}
+
+asm (
+     "ipi_entry: \n"
+     "   call ipi \n"
+#ifndef __x86_64__
+     "   iret"
+#else
+     "   iretq"
+#endif
+     );
+
+
+static void setup_smp_id(void *data)
+{
+    asm ("mov %0, %%gs:0" : : "r"(apic_id()) : "memory");
+}
+
+int smp_id(void)
+{
+    unsigned id;
+
+    asm ("mov %%gs:0, %0" : "=r"(id));
+    return id;
+}
+
+
+//static void do_test(struct ex_regs *regs)
+static void do_test()
+{
+    printf("STOP");
+    while(1);
+}
+
+
+static void __on_cpu(int apicid, void (*function)(void *data), void *data,
+                     int wait)
+{
+    spin_lock(&ipi_lock);
+    if (apicid == smp_id())
+        function(data);
+    else {
+        atomic_inc(&active_cpus);
+        ipi_done = 0;
+        ipi_function = function;
+        ipi_data = data;
+        ipi_wait = wait;
+        apic_icr_write(APIC_INT_ASSERT | APIC_DEST_PHYSICAL | APIC_DM_FIXED
+                       | IPI_VECTOR,
+                       apicid);
+        //lapicw(0x0310/4, apicid<<24);
+        //lapicw(0x0300/4, 0x00004000 | IPI_VECTOR);
+        while (!ipi_done);
+    }   
+    spin_unlock(&ipi_lock);
+}
+
+void on_cpu(int cpu, void (*function)(void *data), void *data)
+{
+//    __on_cpu(cpu, function, data, 1);
+    __on_cpu(cpus[cpu].apicid, function, data, 1); 
+}
+
+/*
+    Prepare idt needed for the ipi.
+*/
+void smp_init(void)
+{
+    int i;
+    void ipi_entry(void);
+    
+    setup_idt();
+    set_idt_entry(IPI_VECTOR, ipi_entry, 0);
+/*    
+    setup_smp_id(0);
+
+    for (i = 1; i < ncpu; ++i){
+        on_cpu(cpus[i].apicid, setup_smp_id, 0);
+    }
+    
+    atomic_inc(&active_cpus);
+*/
+}
+
+
+
+/**********************************************************************/
+
+static uchar sum(uchar *addr, int len)
 {
   int i, sum;
 
@@ -116,8 +234,10 @@ mpconfig(struct mp **pmp)
   return conf;
 }
 
-void
-mpinit(void)
+/*
+  apicid may differ from different chips
+*/
+void mpinit(void)
 {
   uchar *p, *e;
   int ismp;
@@ -131,7 +251,7 @@ mpinit(void)
     printf("Expect to run on an SMP");
   ismp = 1;
   lapic = (uint*)((uint64_t)(conf->lapicaddr));
-
+//printf("lapic = %p\n", lapic);
   for(p=(uchar*)(conf+1), e=(uchar*)conf+conf->length; p<e; ){
     switch(*p){
     case MPPROC:
@@ -160,7 +280,7 @@ mpinit(void)
   if(!ismp)
     //panic("Didn't find a suitable machine");
     printf("Didn't find a suitable machine");
-
+/*
   if(mp->imcrp){
     // Bochs doesn't support IMCR, so this doesn't run on Bochs.
     // But it would on real hardware.
@@ -169,7 +289,7 @@ mpinit(void)
     //outb(0x23, inb(0x23) | 1);  // Mask external interrupts.
     outb(inb(0x23) | 1, 0x23);  // Mask external interrupts.
   }
-
+*/
 }
 
 

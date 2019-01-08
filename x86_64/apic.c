@@ -4,6 +4,7 @@
 #include "defs.h"
 #include "apic.h"
 #include "io.h"
+#include "traps.h"
 
 // Local APIC registers, divided by 4 for use as uint[] indices.
 #define ID      (0x0020/4)   // ID
@@ -45,6 +46,52 @@ lapicw(int index, int value)
   lapic[index] = value;
   lapic[ID];  // wait for write to finish, by reading
 }
+
+void
+lapicinit(void)
+{
+  if(!lapic)
+    return;
+
+  // Enable local APIC; set spurious interrupt vector.
+  lapicw(SVR, ENABLE | (T_IRQ0 + IRQ_SPURIOUS));
+
+  // The timer repeatedly counts down at bus frequency
+  // from lapic[TICR] and then issues an interrupt.
+  // If xv6 cared more about precise timekeeping,
+  // TICR would be calibrated using an external time source.
+  lapicw(TDCR, X1);
+  lapicw(TIMER, PERIODIC | (T_IRQ0 + IRQ_TIMER));
+  lapicw(TICR, 10000000);
+
+  // Disable logical interrupt lines.
+  lapicw(LINT0, MASKED);
+  lapicw(LINT1, MASKED);
+
+  // Disable performance counter overflow interrupts
+  // on machines that provide that interrupt entry.
+  if(((lapic[VER]>>16) & 0xFF) >= 4)
+    lapicw(PCINT, MASKED);
+  // Map error interrupt to IRQ_ERROR.
+  lapicw(ERROR, T_IRQ0 + IRQ_ERROR);
+
+  // Clear error status register (requires back-to-back writes).
+  lapicw(ESR, 0);
+  lapicw(ESR, 0);
+
+  // Ack any outstanding interrupts.
+  lapicw(EOI, 0);
+/*
+  // Send an Init Level De-Assert to synchronise arbitration ID's.
+  lapicw(ICRHI, 0);
+  lapicw(ICRLO, BCAST | INIT | LEVEL);
+  while(lapic[ICRLO] & DELIVS)
+    ;
+*/
+  // Enable interrupts on the APIC (but not on the processor).
+  lapicw(TPR, 0);
+}
+
 
 // Spin for a given number of microseconds.
 // On real hardware would want to tune this dynamically.
@@ -315,10 +362,15 @@ void set_irq_line(unsigned line, int val)
 
 void enable_apic(void)
 {
-//    printf("enabling apic\n");
+    printf("enabling apic\n");
     xapic_write(0xf0, 0x1ff); /* spurious vector register */
 }
 
+/*
+  PIC (8259A) 
+  master port address 0x20, 0x21
+  slave port address 0xA0, 0xA1
+*/
 void mask_pic_interrupts(void)
 {
     outb(0xff, 0x21);

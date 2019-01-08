@@ -18,9 +18,13 @@
 #define MULTIBOOT_HEADER_MAGIC 0x1BADB002
 #define MULTIBOOT_HEADER_FLAGS 0x00000000
 
-# Multiboot header.  Data to direct multiboot loader.
-.code32
+//.globl boot_idt
+//.globl idt_descr
+.globl gdt64_desc
 
+//boot_idt = 0
+
+.code32
 # multiboot header
         .long MULTIBOOT_HEADER_MAGIC
         .long MULTIBOOT_HEADER_FLAGS
@@ -72,6 +76,7 @@ efer = 0xC0000080
 .code64
 
 start64:
+//	lidtq idt_descr
 	mov mb_boot_info(%rip), %rbx
         mov %rbx, %rdi
 	mov mb_magic(%rip), %rbx
@@ -118,6 +123,8 @@ ap_start32:
 .code64
 ap_start64:
 	call mpenter	
+	sti   // Enable external Interrupt
+	nop
 1:
 	hlt
 	jmp 1b
@@ -129,7 +136,7 @@ sipi_entry_mov:
 	xor %rdi, %rdi
 	mov $(sipi_end - sipi_entry), %rcx
 	rep/movsb
-	call DEBUG
+//	call DEBUG
 	ret
 
 /***********************************************************************/
@@ -138,6 +145,10 @@ sipi_entry_mov:
 pt_root:        .quad ptl4
 mb_boot_info:   .quad 0
 mb_magic:	.quad 0
+
+//idt_descr:
+//        .word 16 * 256 - 1
+//        .quad boot_idt
 
 /* Linear-Address Translation to a 2-MByte Page using 4-Level Paging */
 .align 4096

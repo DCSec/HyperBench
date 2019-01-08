@@ -1,4 +1,4 @@
-
+#include "desc.h"
 
 #ifdef __x86_64__
 #  define R "r"
@@ -9,14 +9,23 @@
 #  define W "l"
 #  define S "4"
 #endif
-/*
-static inline uint64_t pt_pa(void)
+
+static inline void lidt(idt_entry_t *p, int size)
 {
-    uint64_t val;
-    asm volatile("mov %%cr3, %0" : "=r"(val) : : "memory");
-    return val;
+    struct {
+                uint16_t limit;
+                uint64_t base;
+        } __attribute__((packed)) IDTR;
+
+    IDTR.base = (uint64_t)p;
+    IDTR.limit = (uint16_t)size;
+
+//    asm volatile("lidt (%0)" : : "r" (IDTR));
+    asm volatile("lidtq %0\n" :: "m"(IDTR));
+
 }
-*/
+
+
 static inline u16 read_cs(void)
 {
     unsigned val;

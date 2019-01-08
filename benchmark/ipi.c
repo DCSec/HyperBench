@@ -6,6 +6,7 @@ int i;
 
 static inline void nop(void *junk)
 {
+
 }
 
 static inline void ipi(void)
@@ -17,7 +18,7 @@ static void init()
 {
     /* */
     smp_init();
-    setup_pt();
+    setup_mmu(1ul << 32);
 }
 
 static inline void ALIGN kernel()
@@ -43,10 +44,10 @@ DEFINE_BENCHMARK(ipi) =
 {
     .name = "ipi",
     .category = "exception",
-    .kernel_init = init,
-    .kernel = kernel,
-    .kernel_control = control,
-    .kernel_cleanup = cleanup,
+    .init = init,
+    .benchmark = kernel,
+    .benchmark_control = control,
+    .cleanup = cleanup,
     .iteration_count = ITERATION
 };
 

@@ -8,7 +8,7 @@
 #define SLDT            1000000
 #define SMSW            1000000
 #define PUSHF_POPF      1000000
-#define IPI             1000
+#define IPI             10
 #define HYPERCALL       1000
 #define SET_PAGE_TABLE  1
 #define COLD_ACCESS     100000
