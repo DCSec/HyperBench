@@ -81,9 +81,9 @@ void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
     heap_base = (base_addr + PAGE_SIZE - 1) & (-PAGE_SIZE);
     heap_end = heap_end & (-PAGE_SIZE);
 #ifdef __BARE_METAL
-    printf("Memory Start: %x B\n", heap_base);
-    printf("Memory End: %x B\n", heap_end);
-    printf("Total Memory: %d MB\n", heap_end >> 20);
+    printf("Memory Start: %lx B\n", heap_base);
+    printf("Memory End: %lx B\n", heap_end);
+    printf("Total Memory: %ld MB\n", heap_end >> 20);
 #endif
   }
   
