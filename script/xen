@@ -1,0 +1,10 @@
+#!/bin/bash
+xl destroy hyperbench
+losetup /dev/loop0 /opt/os.img
+kpartx -av /dev/loop0
+mount /dev/mapper/loop0p1 /opt/os
+cp ./out/hyperbench* /opt/os/boot
+umount /opt/os
+xl create -c /etc/xen/hyperbench.hvm
+
+

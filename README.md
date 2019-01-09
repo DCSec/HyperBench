@@ -30,6 +30,12 @@ Enter HyperBench directory and run the following script.
 ```
 # qemu-system-x86_64 -enable-kvm -smp 2 -m 4096 -kernel out/hyperbench.32 -nographic | host/host
 ```
+### Start on Xen
+There is a script in the script/ directory named xen.
+Make sure /opt/os exists before running the following command.
+```
+# ./script/xen
+```
 
 ## Appendix
 
