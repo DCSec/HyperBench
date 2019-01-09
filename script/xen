@@ -5,6 +5,7 @@ kpartx -av /dev/loop0
 mount /dev/mapper/loop0p1 /opt/os
 cp ./out/hyperbench* /opt/os/boot
 umount /opt/os
-xl create -c /etc/xen/hyperbench.hvm
+losetup -d /dev/mapper/loop0p1
+xl create -c ./script/hyperbench.hvm
 
 

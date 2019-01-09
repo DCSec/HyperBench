@@ -15,6 +15,7 @@ If you want to run HyperBench on host machine, uncomment the **\_\_BARE\_METAL**
 ```
 # make
 ```
+
 ### Start on host machine
 Using GRUB 2, you can boot HyperBench kernel from a file stored in a Linux file system by copying kernel to /boot/ directory and then adding the following entry.
 ```
@@ -31,6 +32,8 @@ Enter HyperBench directory and run the following script.
 # qemu-system-x86_64 -enable-kvm -smp 2 -m 4096 -kernel out/hyperbench.32 -nographic | host/host
 ```
 ### Start on Xen
+Rename script/pin because Xen can pin vcpus in configuration file.
+Run the script/os(doing) to prepare the os.img.
 There is a script in the script/ directory named xen.
 Make sure /opt/os exists before running the following command.
 ```

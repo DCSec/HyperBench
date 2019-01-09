@@ -29,7 +29,7 @@ int main(void *mb_info, int magic)
     startothers();   // start Application Processors
     enable_x2apic();
     harness_main();  // run benchmarks
-    printf("sizeof(void *) = %d\n", (int)sizeof(void *));
+//    printf("sizeof(void *) = %d\r\n", (int)sizeof(void *));
 #ifdef __BARE_METAL
     while(1);        //hold the physical machine, or it will restart infinitely
 #else
@@ -42,7 +42,7 @@ int main(void *mb_info, int magic)
 //static void mpenter(void)
 void mpenter(void)
 {
-  printf("cpu%d: starting %d\n", cpuid(), cpuid());
+  printf("cpu%d: starting %d\r\n", cpuid(), cpuid());
   lidt(boot_idt, sizeof(boot_idt)-1);
   enable_apic();
   xchg(&(mycpu()->started), 1); // tell startothers() we're up

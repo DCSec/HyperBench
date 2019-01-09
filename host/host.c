@@ -4,8 +4,8 @@
 #include "rdtsc.h"
 #include <sys/time.h>
 
-#define STR_BENCHMARK_BEGIN "[BENCHMARKS BEGIN]\n"
-#define STR_BENCHMARK_END   "[BENCHMARKS END]\n"
+#define STR_BENCHMARK_BEGIN "[BENCHMARKS BEGIN]\r\n"
+#define STR_BENCHMARK_END   "[BENCHMARKS END]\r\n"
 
 
 typedef unsigned long long int uint64_t;
@@ -111,14 +111,14 @@ int main(int argc, void **arg)
 //    if(read_symbol() == '*'){
 //       do_command("./script/pin"); 
 //    }
-    if(!read_start("*\n")){
+    if(!read_start("*\r\n")){
        do_command("./script/pin"); 
     }
     
 
     if(!read_start(STR_BENCHMARK_BEGIN)) {
         
-        printf("%-15s%-20s%-15s%-15s%-15s%s\n", "category", "benchmark", "iterations","control-time","kernel-time","cycles");
+        printf("%-15s%-20s%-15s%-15s%-15s%s\r\n", "category", "benchmark", "iterations","control-time","kernel-time","cycles");
         
         while(!read_benchmark()){
  
@@ -148,7 +148,7 @@ int main(int argc, void **arg)
             time_kernel = (end1 - start1);
             printf("%-15llu", time_control);
             printf("%-15llu", time_kernel);
-            printf("%lld\n", time_kernel - time_control);
+            printf("%lld\r\n", time_kernel - time_control);
         }
 
     }

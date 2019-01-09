@@ -2,8 +2,8 @@
 #include "rdtsc.h"
 
 
-#define STR_BENCHMARK_BEGIN "[BENCHMARKS BEGIN]\n"
-#define STR_BENCHMARK_END   "[BENCHMARKS END]\n"
+#define STR_BENCHMARK_BEGIN "[BENCHMARKS BEGIN]\r\n"
+#define STR_BENCHMARK_END   "[BENCHMARKS END]\r\n"
 
 extern const benchmark_t _BENCHMARKS_START[], _BENCHMARKS_END[];
 
@@ -79,7 +79,7 @@ void harness_main()
     unsigned long long cycles1, cycles2;
      
     /* inform host to pin VCPUs */ 
-    printf("*\n");
+    printf("*\r\n");
 #ifdef __BARE_METAL
 
 #else
@@ -90,7 +90,7 @@ void harness_main()
     }
 #endif
     
-    printf("%-15s%-15s%-10s\n", "category","name","iteration");
+    printf("%-15s%-15s%-10s\r\n", "category","name","iteration");
     printf(STR_BENCHMARK_BEGIN);
 
     for(benchmark = &_BENCHMARKS_START[0]; benchmark < _BENCHMARKS_END; benchmark++)
