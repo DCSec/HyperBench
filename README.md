@@ -34,7 +34,7 @@ Enter HyperBench directory and run the following script.
 There is a script in the script/ directory named xen.
 Make sure /opt/os exists before running the following command.
 ```
-# ./script/xen
+# ./script/xen | host/host
 ```
 
 ## Appendix
