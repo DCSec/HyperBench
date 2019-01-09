@@ -108,7 +108,10 @@ int main(int argc, void **arg)
 
 
     /* pin each VCPU to a specific PCPU */
-    if(read_symbol() == '*'){
+//    if(read_symbol() == '*'){
+//       do_command("./script/pin"); 
+//    }
+    if(!read_start("*\n")){
        do_command("./script/pin"); 
     }
     

@@ -8,14 +8,14 @@
 #define SLDT            100000
 #define SMSW            100000
 #define PUSHF_POPF      100000
-#define IPI             1000
+#define IPI             100
 #define HYPERCALL       1000
 #define SET_PAGE_TABLE  1
 #define COLD_ACCESS     100000
 #define HOT_ACCESS      100000
-#define IN_SERIAL_PORT  10000
-#define OUT_SERIAL_PORT 100000
-#define PRINTF          100000
+#define IN_SERIAL_PORT  1000
+#define OUT_SERIAL_PORT 1000
+#define PRINTF          1000
 
 #define ALIGN __attribute__((aligned(4096)))
 
