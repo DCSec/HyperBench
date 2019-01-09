@@ -1,11 +1,35 @@
-# HyperBench
+# HyperBench-A Benchmark Suite for Virtualization Capabilities
 
-## Description
-HyperBench - A Benchmark Suite for Virtualization Capabilities
+## Introduction
+HyperBench is a set of micro-benchmarks for analyzing how much hardware mechanisms and hypervisor designs support virtualization.
+HyperBench is designed and implemented from ground up as a custom kernel.
+It contains 15 micro-benchmarks currently covering CPU, memory system, and I/O. 
+These benchmarks trigger various hypervisor-level events, such as transitions between VMs and the hypervisor, two-dimensional page walk, notification from front-end to back-end driver.
 
-HyperBench is a custom kernel designed to trigger various hypervisor-level events, such as transitions between VMs and the hypervisor, two-dimensional page walk, notification from front-end to back-end driver.
+## Architecture
+The HyperBench is designed to support multiple architectures; currently x86\_64 only. All benchmarks share the underlying API and drivers.
 
 ## Quick Start
+### Compiling HyperBench
+If you want to run HyperBench on host machine, uncomment the **\_\_BARE\_METAL** macro definitions in include/defs.h. Otherwise, type the following instruction directly.
+```
+# make
+```
+### Start on host machine
+Using GRUB 2, you can boot HyperBench kernel from a file stored in a Linux file system by copying kernel to /boot/ directory and then adding the following entry.
+```
+menuentry 'HyperBench'{
+     insmod part_msdos
+     insmod ext2
+     set root='hd0,msdos1'
+     multiboot /boot/hyperbench.64
+}
+```
+### Start on QEMU-KVM
+Enter HyperBench directory and run the following script.
+```
+# qemu-system-x86_64 -enable-kvm -smp 2 -m 4096 -kernel out/hyperbench.32 -nographic | host/host
+```
 
 ## Appendix
 
