@@ -32,10 +32,10 @@ Enter HyperBench directory and run the following script.
 # qemu-system-x86_64 -enable-kvm -smp 2 -m 4096 -kernel out/hyperbench.32 -nographic | host/host
 ```
 ### Start on Xen
-Rename script/pin because Xen can pin vcpus in configuration file.
-Run the script/os(doing) to prepare the os.img.
-There is a script in the script/ directory named xen.
-Make sure /opt/os exists before running the following command.
+1. Rename script/pin because Xen can pin vcpus in configuration file.
+2. Run the script/os(doing) to prepare the os.img.
+3. There is a script in the script/ directory named xen.
+4. Make sure /opt/os exists before running the following command.
 ```
 # ./script/xen | host/host
 ```
