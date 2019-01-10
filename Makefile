@@ -25,21 +25,19 @@ include $(ARCH)/Makefile
 include benchmark/Makefile
 include harness/Makefile
 
+# auto depend flags 
 autodepend-flags = -MMD -MF $(dir $*).$(notdir $*).d
 
 
 CFLAGS += -mno-red-zone -mno-sse -mno-sse2
 CFLAGS += -m64 
 CFLAGS += -O0
-# auto depend flags 
 CFLAGS += -g3 $(autodepend-flags)
-#CFLAGS += -Wall -Wwrite-strings -Wclobbered -Wempty-body -Wuninitialized
-#CFLAGS += -Wignored-qualifiers -Wunused-but-set-parameter
-#CFLAGS += -Wmissing-prototypes -Wstrict-prototypes
+# uncomment when compile HyperBench for host machine
+#CFLAGS += -D __BARE_METAL
 CFLAGS += -Werror
 CFLAGS += -ffreestanding
 CFLAGS += -fno-omit-frame-pointer
-#CFLAGS += -Wno-frame-address
 CFLAGS += -fno-pic
 CFLAGS += -fno-builtin
 CFLAGS += -nostdlib

@@ -10,9 +10,6 @@
 #include "types.h"
 #include "multiboot.h"
 
-
-#define __BARE_METAL
-
 #define __unused __attribute__((__unused__))
 
 #define MIN(a, b)		((a) < (b) ? (a) : (b))
