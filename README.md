@@ -33,7 +33,7 @@ Enter HyperBench directory and run the following script.
 ```
 ### Start on Xen
 1. Rename script/pin because Xen can pin vcpus in configuration file.
-2. [Prepare HyperBench image](/docs/IMAGE.md)
+2. [Prepare HyperBench image](docs/IMAGE.md)
 3. There is a script in the script/ directory named xen.
 4. Make sure /opt/os exists before running the following command.
 ```
