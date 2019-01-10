@@ -5,7 +5,7 @@
 dd if=/dev/zero of=./os.img bs=1M count=100
 ```
 
-使用fdisk 在os.img上创建分区表，然后对他进行分区；
+使用fdisk在os.img上创建分区表，然后对他进行分区
 ```
 fdisk os.img
 hexdump os.img
