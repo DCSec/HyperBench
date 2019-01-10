@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#var_test=`ps -eLo ruser,pid,ppid,lwp,psr,args | grep qemu | grep -v grep`
+#echo $var_test
+
+var=`ps -eLo ruser,pid,ppid,lwp,psr,args | grep qemu | grep -v grep | awk '{print $4}'`
+var_length=0
+var_index=0
+vcpu=0
+
+for i in $var
+do
+    let var_length++
+done
+
+
+for i in $var
+do
+    echo "pin $i"
+    if [ $var_index -gt $((var_length-3)) ] 
+    then
+        taskset -p $((2<<vcpu)) $i
+        let vcpu++
+    fi
+    let var_index++
+done
+
+
+
