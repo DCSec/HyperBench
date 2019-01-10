@@ -112,7 +112,7 @@ int main(int argc, void **arg)
 //       do_command("./script/pin"); 
 //    }
     if(!read_start("*\r\n")){
-       //do_command("./script/pin"); 
+       do_command("./script/pin"); 
     }
     
 
