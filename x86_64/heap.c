@@ -70,8 +70,8 @@ void *get_free_pages(void *mem, unsigned long size)
 */
 void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
 {
-//    u64 end_of_memory = bootinfo->mem_upper * 1024ull;
-//    printf("mbi->mmap_addr = %x\n", bootinfo->mmap_addr);
+    u64 end_of_memory = bootinfo->mem_upper * 1024ull;
+    printf("mbi->mem_upper = %lx\n", end_of_memory);
 //    printf("mbi->mmap_length = %x\n", bootinfo->mmap_length);
   if(!first_mem_init){
     first_mem_init = true;
@@ -89,8 +89,8 @@ void early_mem_init(uintptr_t base_addr, struct mbi_bootinfo *bootinfo)
   
     freelist = 0;
     if(freelist == 0){
-//        get_free_pages((void *)heap_base, heap_end - heap_base);
-        get_free_pages((void *)heap_base, 1ul << 31);
+        get_free_pages((void *)heap_base, end_of_memory - heap_base);
+//        get_free_pages((void *)heap_base, 1ul << 31);
     }    
   
 }
@@ -194,12 +194,12 @@ void switch_to_start_cr3()
 {
     write_cr3(start_cr3);
 }
-
+/*
 void reset_freelist()
 {
     get_free_pages((void *)heap_base, 1ul << 31);
 }
-
+*/
 
 /******************************************************************************************************/
 

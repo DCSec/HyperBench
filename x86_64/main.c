@@ -47,6 +47,8 @@ void mpenter(void)
   enable_apic();
   xchg(&(mycpu()->started), 1); // tell startothers() we're up
   enable_x2apic(); // This funciton must behind xchg(&(mycpu()->started), 1), why?
+//  asm volatile("sti");
+//  asm volatile("nop");
 }
 
 /*
