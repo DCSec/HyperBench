@@ -2,7 +2,7 @@
 
 HyperBench is a set of micro-benchmarks for analyzing how much hardware mechanisms and hypervisor designs support virtualization.
 HyperBench is designed and implemented from ground up as a custom kernel.
-It contains 15 micro-benchmarks currently covering CPU, memory system, and I/O. 
+It contains 15 micro-benchmarks currently covering CPU, memory system, and I/O.
 These benchmarks trigger various hypervisor-level events, such as transitions between VMs and the hypervisor, two-dimensional page walk, notification from front-end to back-end driver.
 
 ## Content
