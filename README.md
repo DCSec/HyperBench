@@ -1,3 +1,5 @@
+[TOC]
+
 # HyperBench-A Benchmark Suite for Virtualization Capabilities
 
 HyperBench is a set of micro-benchmarks for analyzing how much hardware mechanisms and hypervisor designs support virtualization.
@@ -5,7 +7,7 @@ HyperBench is designed and implemented from ground up as a custom kernel.
 It contains 15 micro-benchmarks currently covering CPU, memory system, and I/O.
 These benchmarks trigger various hypervisor-level events, such as transitions between VMs and the hypervisor, two-dimensional page walk, notification from front-end to back-end driver.
 
-[TOC]
+
 
 ## Quick Start
 
@@ -61,8 +63,15 @@ result is zero.
 Store the corresponding register value into memory repeatedly.
 #### PUSHF-POPF
 The PUSHF and POPF instructions execute alternately on the current stack. The time between the first PUSHF instruction and the last POPF instruction is measured.
+#### LGDT SET-CR3
+Read the current value of the register during the initialization phase and load the value into the corresponding register repeatedly in the test phase.
 
 ### Exception
+#### Hypercall 
+Execute an instruction in the VM which leads to a transition to the hypervisor and return without doing much work in the hypervisor.
+#### IPI
+Issue an IPI from a CPU to another CPU which is in the halt state. IPI benchmark measures the time between sending the IPI until the sending CPU receives the response from the receiving CPU without
+doing much work on the receiving CPU. In the virtualized environment, this benchmark emulates an IPI between two VCPUs running on two separate physical CPUs (PCPUs).
 
 ### Memory
 
