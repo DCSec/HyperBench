@@ -115,7 +115,7 @@ HyperBench kernel is designed as a standalone kernel. It can run as a test VM on
 4. Jump into 64-bit code mode and call **main** function.
 5. Get the memory layout information.
 6. Enable local APIC.
-7. Detect the application processors (APs).
+7. Detect the application processors (APs). Get the APIC ID of each AP and store them in an array.
 8. Initialize APs(step 3 to step 6) in serial mode.
 9. Enable x2APIC.
 10. Execute benchmarks one by one.
