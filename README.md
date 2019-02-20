@@ -62,7 +62,8 @@ result is zero.
 #### SGDT SLDT SIDT
 Store the corresponding register value into memory repeatedly.
 #### PUSHF-POPF
-The PUSHF and POPF instructions execute alternately on the current stack. The time between the first PUSHF instruction and the last POPF instruction is measured.
+The PUSHF and POPF instructions execute alternately on the current stack. 
+The time between the first PUSHF instruction and the last POPF instruction is measured.
 #### LGDT SET-CR3
 Read the current value of the register during the initialization phase and load the value into the corresponding register repeatedly in the test phase.
 
@@ -70,12 +71,38 @@ Read the current value of the register during the initialization phase and load 
 #### Hypercall 
 Execute an instruction in the VM which leads to a transition to the hypervisor and return without doing much work in the hypervisor.
 #### IPI
-Issue an IPI from a CPU to another CPU which is in the halt state. IPI benchmark measures the time between sending the IPI until the sending CPU receives the response from the receiving CPU without
-doing much work on the receiving CPU. In the virtualized environment, this benchmark emulates an IPI between two VCPUs running on two separate physical CPUs (PCPUs).
+Issue an IPI from a CPU to another CPU which is in the halt state. 
+IPI benchmark measures the time between sending the IPI until the sending CPU receives the response from the receiving CPU without
+doing much work on the receiving CPU. 
+In the virtualized environment, this benchmark emulates an IPI between two VCPUs running on two separate physical CPUs (PCPUs).
 
 ### Memory
+#### Hot-Memory-Access
+Read many different memory pages twice and the time of the second memory access is measured. The default guest page size is 4KB.
+#### Cold-Memory-Access
+This benchmark reserves a large portion of memory that has never been accessed before and performs one memory read at the start address of each page.
+The reading over different pages eliminates TLB hits due to the prefetcher, as the prefetcher cannot access data across page
+boundaries. The default guest page size is 4KB.
+#### Set-Page-Table
+Map the whole physical memory 1:1 to the virtual address space. This
+benchmark creates a lot of page table entries, which is a frequent
+operation in heavy memory allocation. The default guest page size is
+4KB.
+#### TLB-Shutdown
+......
 
 ### I/O
+#### IN
+Polling and interrupt are two main approaches for notifications from
+host to guest. This benchmark reads the register of the serial port
+through the register I/O instructions repeatedly, which emulates the
+polling mechanism.
+#### OUT
+OUT benchmark outputs a character to the register of the serial port
+repeatedly.
+#### Print
+This benchmark outputs a string to the serial port through the I/O
+address space, which is handled through the string I/O instructions.
 
 
 
