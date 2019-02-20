@@ -104,8 +104,22 @@ repeatedly.
 This benchmark outputs a string to the serial port through the I/O
 address space, which is handled through the string I/O instructions.
 
-## HyperBench Details
-HyperBench is designed as a standalone kernel. It can run as a test VM on various hypervisors and run directly on bare-metal.
+## HyperBench kernel Details
+HyperBench kernel is designed as a standalone kernel. It can run as a test VM on various hypervisors and run directly on bare-metal.
+
+### Initialization Before Running Benchmarks
+
+1. When the CPU are initialized by BIOS, the bootstrap processor (BSP) begins executing the grub code. Grub calls the HyperBench kernel.
+2. Since HyperBench kernel is in multiboot format, it can get the information delieverey by grub. 
+3. The BSP set up a stack for itself and enter long mode. The first action of entering long mode is load the predefined global descriptor table. Then, turn on page size extension for 2Mbyte pages. Set CR3. Enables IA-32e mode operation. Turn on paging.
+4. Jump into 64-bit code mode and call **main** function.
+5. Get the memory layout information.
+6. Enable local APIC.
+7. Detect the application processors (APs).
+8. Initialize APs(step 3 to step 6) in serial mode.
+9. Enable x2APIC.
+10. Execute benchmarks one by one.
+
 ### Startup Memory Layout
 Linear-Address Translation to a 2-MByte Page using 4-Level Paging.
 
