@@ -104,5 +104,15 @@ repeatedly.
 This benchmark outputs a string to the serial port through the I/O
 address space, which is handled through the string I/O instructions.
 
+## HyperBench Details
+HyperBench is designed as a standalone kernel. It can run as a test VM on various hypervisors and run directly on bare-metal.
+### Startup Memory Layout
+Linear-Address Translation to a 2-MByte Page using 4-Level Paging.
+
+* PML4(page map level 4): A 4-KByte naturally aligned PML4 table which is located at the physical address specified in bits 51:12 of CR3. There is only one 64-bit entry (PML4E).
+* PDPT(page-directory pointers table): A 4-KByte naturally aligned page-directory-pointer table is located at the physical address specified in bits 51:12 of the PML4E. There is only 4 64-bit entries
+(PDPTEs).
+* PDT(page-directory table): A 4-KByte aligned PDT which is located at the physical address specified in bits 51:12 of the PDPTE. The page-directory table contains 2048 64-bit entries
+(PDEs).
 
 
