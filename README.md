@@ -1,4 +1,4 @@
-[TOC]
+
 
 # HyperBench-A Benchmark Suite for Virtualization Capabilities
 
@@ -7,7 +7,7 @@ HyperBench is designed and implemented from ground up as a custom kernel.
 It contains 15 micro-benchmarks currently covering CPU, memory system, and I/O.
 These benchmarks trigger various hypervisor-level events, such as transitions between VMs and the hypervisor, two-dimensional page walk, notification from front-end to back-end driver.
 
-
+[TOC]
 
 ## Quick Start
 
