@@ -275,6 +275,10 @@ void mpinit(void)
       if(ncpu < NCPU) {
         cpus[ncpu].apicid = proc->apicid;  // apicid may differ from ncpu
         ncpu++;
+#ifdef __HT__
+	cpus[ncpu].apicid = proc->apicid + 1;  // HyperThread(Logical Processor)
+	ncpu++;
+#endif
       }
       p += sizeof(struct mpproc);
       continue;

@@ -9,8 +9,9 @@ OBJS	+= benchmark/smsw.o
 OBJS	+= benchmark/pushf_popf.o
 OBJS	+= benchmark/lgdt.o
 OBJS	+= benchmark/set-cr3.o
-#OBJS	+= benchmark/hypercall.o
+OBJS	+= benchmark/hypercall.o
 OBJS	+= benchmark/ipi.o
+OBJS	+= benchmark/ipi2.o
 
 # Memory benchmarks
 OBJS	+= benchmark/memory-cold.o

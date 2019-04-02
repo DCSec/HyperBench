@@ -28,6 +28,7 @@ int main(void *mb_info, int magic)
     mpinit();        // detect other processors
     startothers();   // start Application Processors
     enable_x2apic();
+
     harness_main();  // run benchmarks
 //    printf("sizeof(void *) = %d\r\n", (int)sizeof(void *));
 #ifdef __BARE_METAL
@@ -42,7 +43,8 @@ int main(void *mb_info, int magic)
 //static void mpenter(void)
 void mpenter(void)
 {
-  printf("cpu%d: starting %d\r\n", cpuid(), cpuid());
+//  printf("cpu%d: starting %d\r\n", cpuid(), cpuid());
+  printf("CPUID = %d\n", lapicid());
   lidt(boot_idt, sizeof(boot_idt)-1);
   enable_apic();
   xchg(&(mycpu()->started), 1); // tell startothers() we're up
@@ -68,7 +70,6 @@ static void startothers(void)
     for(c = cpus; c < cpus+ncpu; c++){
       if(c == mycpu())  // We've started already.
           continue;
-   
           lapicstartap(c->apicid, 0x00);
           // wait for cpu to finish mpenter()
           while(c->started == 0);

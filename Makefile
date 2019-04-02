@@ -34,7 +34,8 @@ CFLAGS += -m64
 CFLAGS += -O0
 CFLAGS += -g3 $(autodepend-flags)
 # uncomment when compile HyperBench for host machine
-#CFLAGS += -D __BARE_METAL
+CFLAGS += -D __BARE_METAL
+#CFLAGS += -D __HT__
 CFLAGS += -Werror
 CFLAGS += -ffreestanding
 CFLAGS += -fno-omit-frame-pointer
