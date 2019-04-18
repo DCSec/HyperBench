@@ -46,7 +46,7 @@ Enter HyperBench directory and run the following script.
 
 ### Start on Xen
 1. Empty the content of script/pin because Xen itself can pin vcpus in configuration file.
-2. [Prepare HyperBench image](https://bitbucket.org/Second2None/hyperbenchv2/wiki/IMAGE) and store the image in /opt/os
+2. [Prepare HyperBench image](https://github.com/Second222None/HyperBench/wiki/HyperBench-Image) and store the image in /opt/os
 ```
 # ./script/xen | host/host
 ```
