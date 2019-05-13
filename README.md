@@ -7,7 +7,39 @@ It contains 15 micro-benchmarks currently covering CPU, memory system, and I/O.
 These benchmarks cause various hypervisor-level events, such as transitions between VMs and the hypervisor, two-dimensional page walk, notification from front-end to back-end driver.
 HyperBench is aimed at quantifying those costs.
 
-[TOC]
+
+Table of Contents
+=================
+
+   * [HyperBench-A Benchmark Suite for Virtualization Capabilities](#hyperbench-a-benchmark-suite-for-virtualization-capabilities)
+      * [Quick Start](#quick-start)
+         * [Download](#download)
+         * [Compiling HyperBench](#compiling-hyperbench)
+         * [Start on host machine](#start-on-host-machine)
+         * [Start on QEMU-KVM](#start-on-qemu-kvm)
+         * [Start on Xen](#start-on-xen)
+      * [Benchmarks](#benchmarks)
+         * [Idle](#idle)
+         * [Sensitive Instruction](#sensitive-instruction)
+            * [SGDT SLDT SIDT](#sgdt-sldt-sidt)
+            * [PUSHF-POPF](#pushf-popf)
+            * [LGDT SET-CR3](#lgdt-set-cr3)
+         * [Exception](#exception)
+            * [Hypercall](#hypercall)
+            * [IPI](#ipi)
+         * [Memory](#memory)
+            * [Hot-Memory-Access](#hot-memory-access)
+            * [Cold-Memory-Access](#cold-memory-access)
+            * [Set-Page-Table](#set-page-table)
+            * [TLB-Shutdown](#tlb-shutdown)
+         * [I/O](#io)
+            * [IN](#in)
+            * [OUT](#out)
+            * [Print](#print)
+      * [HyperBench kernel Details](#hyperbench-kernel-details)
+         * [Initialization Before Running Benchmarks](#initialization-before-running-benchmarks)
+         * [Startup Memory Layout](#startup-memory-layout)
+
 
 ## Quick Start
 
