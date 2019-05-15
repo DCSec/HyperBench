@@ -48,7 +48,7 @@ Table of Contents
 Download HyperBench into the directory /opt/.
 ```
 # cd /opt
-# git clone https://Second2None@bitbucket.org/Second2None/hyperbenchv2.git
+# git clone https://github.com/Second222None/HyperBench.git
 ```
 
 ### Compiling HyperBench
