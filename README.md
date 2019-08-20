@@ -7,6 +7,12 @@ It contains 15 micro-benchmarks currently covering CPU, memory system, and I/O.
 These benchmarks cause various hypervisor-level events, such as transitions between VMs and the hypervisor, two-dimensional page walk, notification from front-end to back-end driver.
 HyperBench is aimed at quantifying those costs.
 
+For information, please read:
+Wei S, Zhang K, Tu B. HyperBench: A Benchmark Suite for Virtualization Capabilities[C]//Abstracts of the 2019 SIGMETRICS/Performance Joint International Conference on Measurement and Modeling of Computer Systems. ACM, 2019: 73-74.
+[Abstract - HyperBench: A Benchmark Suite for Virtualization Capabilities](http://delivery.acm.org/10.1145/3340000/3331478/p73-wei.pdf?ip=159.226.95.72&id=3331478&acc=ACTIVE%20SERVICE&key=33E289E220520BFB%2E99E4F0382D256DD3%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&__acm__=1566280709_f7e66854a50464c9f12c2663330178c6)
+Wei S, Zhang K, Tu B. HyperBench: A Benchmark Suite for Virtualization Capabilities[J]. Proceedings of the ACM on Measurement and Analysis of Computing Systems, 2019, 3(2): 24.
+[HyperBench: A Benchmark Suite for Virtualization Capabilities](http://delivery.acm.org/10.1145/3330000/3326138/pomacs24-wei.pdf?ip=159.226.95.72&id=3326138&acc=ACTIVE%20SERVICE&key=33E289E220520BFB%2E99E4F0382D256DD3%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&__acm__=1566280687_a6bf9dd6e37b3584f9fcb7cbb5be8de7)
+
 
 Table of Contents
 =================
