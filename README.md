@@ -69,7 +69,9 @@ After modification, type the following instruction directly.
 ```
 
 ### Start on host machine
-Using GRUB 2, you can boot HyperBench kernel from a file stored in a Linux file system by copying kernel to /boot/ directory and then adding the following entry.
+1. uncomment the **CFLAGS += -D __BARE_METAL** in the Makefile.
+2. The parameter **NCPU** in **include/param.h** is the number of physical cores in the host machine. Modify it according to the physical machine or the program will get stuck.
+3. Copy the **out/hyperbench.64** to /boot/ directory and then adding the following entry in the grub configuration file.
 ```
 menuentry 'HyperBench'{
      insmod part_msdos
