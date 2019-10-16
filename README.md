@@ -23,6 +23,7 @@ Table of Contents
       * [Quick Start](#quick-start)
          * [Download](#download)
          * [Compiling HyperBench](#compiling-hyperbench)
+         * [CPU Frequency](#cpu-frequency)
          * [Start on host machine](#start-on-host-machine)
          * [Start on QEMU-KVM](#start-on-qemu-kvm)
          * [Start on Xen](#start-on-xen)
@@ -55,6 +56,12 @@ After modification, type the following instruction directly.
 ```
 # make
 ```
+
+### CPU Frequency
+HyperBench measures CPU cycles using the RDTSCP instruction.
+Sometimes Time Stamp Counter clock and CPU core clock are different.
+What's more, to save energy the CPU chip adjusts the CPU core frequency dynamicly.
+Before starting HyperBench, you would better pin the CPU at a fixed frequency to avoid the error.
 
 ### Start on host machine
 1. uncomment the **CFLAGS += -D __BARE_METAL** in the Makefile.
