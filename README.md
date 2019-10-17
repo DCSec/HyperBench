@@ -30,7 +30,7 @@ Table of Contents
       * [Benchmarks](#benchmarks)
          * [Idle](#idle)
          * [Sensitive Instruction](#sensitive-instruction)
-         * [Virtualization Extention Instructions](#exception)
+         * [Virtualization Extention Instructions](#virtualization-extension-instructions)
          * [Memory](#memory)
          * [I/O](#io)
       * [HyperBench kernel Details](#hyperbench-kernel-details)
