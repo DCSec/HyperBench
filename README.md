@@ -70,7 +70,7 @@ cat /proc/cpuinfo | grep MHz | uniq
 ### Start on host machine
 1. uncomment the **CFLAGS += -D __BARE_METAL** in the Makefile.
 2. The parameter **NCPU** in **include/param.h** is the number of physical cores in the host machine. Modify it according to the physical machine or the program will get stuck.
-3. Copy the **out/hyperbench.64** to /boot/ directory and then adding the following entry in the grub configuration file.
+3. Copy the **out/hyperbench.64** to /boot/ directory and then adding the following entry in the grub configuration file. Note that the following is just an example. You'd better imitate other grub menus in you grub.cfg file.
 ```
 menuentry 'HyperBench'{
      insmod part_msdos
