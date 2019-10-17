@@ -61,7 +61,7 @@ After modification, type the following instruction directly.
 ```
 
 ### Start on host machine
-Using GRUB 2, you can boot HyperBench kernel from a file stored in a Linux file system by copying kernel to /boot/ directory and then adding the following entry.
+You can boot HyperBench kernel from a file stored in a Linux file system by copying kernel to /boot/ directory and then adding the following entry. Note that the following is just an example. You'd better imitate other grbu menus in you grub.cfg file.
 ```
 menuentry 'HyperBench'{
      insmod part_msdos
