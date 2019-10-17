@@ -62,6 +62,10 @@ HyperBench measures CPU cycles using the RDTSCP instruction.
 Sometimes Time Stamp Counter clock and CPU core clock are different.
 What's more, to save energy the CPU chip adjusts the CPU core frequency dynamicly.
 Before starting HyperBench, you would better pin the CPU at a fixed frequency to avoid the error.
+Typing the following command multiple times to determine the CPU frequency is stable.
+```
+cat /proc/cpuinfo | grep MHz | uniq
+```
 
 ### Start on host machine
 1. uncomment the **CFLAGS += -D __BARE_METAL** in the Makefile.
@@ -105,7 +109,7 @@ The time between the first PUSHF instruction and the last POPF instruction is me
 #### LGDT SET-CR3
 Read the current value of the register during the initialization phase and load the value into the corresponding register repeatedly in the test phase.
 
-### Exception
+### Virtualization Extension Instructions
 #### Hypercall 
 Execute an instruction in the VM which leads to a transition to the hypervisor and return without doing much work in the hypervisor.
 #### IPI
