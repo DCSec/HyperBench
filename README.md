@@ -66,7 +66,9 @@ Typing the following command multiple times to determine the CPU frequency is st
 ```
 cat /proc/cpuinfo | grep MHz | uniq
 ```
-
+```
+cat /proc/cpuinfo | grep constant_tsc
+```
 ### Start on host machine
 1. uncomment the **CFLAGS += -D __BARE_METAL** in the Makefile.
 2. The parameter **NCPU** in **include/param.h** is the number of physical cores in the host machine. Modify it according to the physical machine or the program will get stuck.
